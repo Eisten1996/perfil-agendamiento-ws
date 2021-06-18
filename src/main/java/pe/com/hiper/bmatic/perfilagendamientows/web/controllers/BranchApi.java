@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
-@RequestMapping("/v1/branch")
+@RequestMapping("/v1/branches")
 public interface BranchApi {
 
-    @GetMapping(value = "/branches", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request);
 }
