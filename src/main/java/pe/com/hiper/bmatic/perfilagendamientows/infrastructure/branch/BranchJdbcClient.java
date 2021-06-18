@@ -1,15 +1,12 @@
 package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.branch;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.agency.model.Branch;
 
 import java.util.List;
 
-/**
- * @author Dipper
- * @project perfil-agendamiento-ws
- * @created 18/06/2021 - 12:09
- */
+@Component
 public class BranchJdbcClient {
 
     private final JdbcTemplate jdbcTemplate;

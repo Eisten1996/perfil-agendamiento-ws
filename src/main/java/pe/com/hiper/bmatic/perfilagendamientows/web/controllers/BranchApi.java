@@ -1,13 +1,18 @@
 package pe.com.hiper.bmatic.perfilagendamientows.web.controllers;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pe.com.hiper.bmatic.perfilagendamientows.web.models.BranchDTO;
 
-/**
- * @author Dipper
- * @project perfil-agendamiento-ws
- * @created 18/06/2021 - 12:58
- */
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-@RequestMapping("/v1/branches")
+
+@RequestMapping("/v1/branch")
 public interface BranchApi {
+
+    @GetMapping(value = "/branches", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request);
 }
