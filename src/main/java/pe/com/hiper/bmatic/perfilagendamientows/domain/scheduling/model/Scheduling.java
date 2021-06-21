@@ -2,25 +2,39 @@ package pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model;
 
 public class Scheduling {
 
-    private int id;
+    private Integer id;
     private String branchId;
     private String branchName;
-    private int minDays;
-    private int maxDays;
+    private Integer minDays;
+    private Integer maxDays;
+    private Integer toleranceTime;
+    private String services;
+    private Integer multipleBookings;
+    private Integer confirmEmail;
+    private Integer confirmTime;
+    private String unidConfirmTime;
 
-    public Scheduling(int id, String branchId, String branchName, int minDays, int maxDays) {
+    public Scheduling(Integer id, String branchId, String branchName, Integer minDays, Integer maxDays,
+                      Integer toleranceTime, String services, Integer multipleBookings, Integer confirmEmail,
+                      Integer confirmTime, String unidConfirmTime) {
         this.id = id;
         this.branchId = branchId;
         this.branchName = branchName;
         this.minDays = minDays;
         this.maxDays = maxDays;
+        this.toleranceTime = toleranceTime;
+        this.services = services;
+        this.multipleBookings = multipleBookings;
+        this.confirmEmail = confirmEmail;
+        this.confirmTime = confirmTime;
+        this.unidConfirmTime = unidConfirmTime;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,20 +54,68 @@ public class Scheduling {
         this.branchName = branchName;
     }
 
-    public int getMinDays() {
+    public Integer getMinDays() {
         return minDays;
     }
 
-    public void setMinDays(int minDays) {
+    public void setMinDays(Integer minDays) {
         this.minDays = minDays;
     }
 
-    public int getMaxDays() {
+    public Integer getMaxDays() {
         return maxDays;
     }
 
-    public void setMaxDays(int maxDays) {
+    public void setMaxDays(Integer maxDays) {
         this.maxDays = maxDays;
+    }
+
+    public Integer getToleranceTime() {
+        return toleranceTime;
+    }
+
+    public void setToleranceTime(Integer toleranceTime) {
+        this.toleranceTime = toleranceTime;
+    }
+
+    public String getServices() {
+        return services;
+    }
+
+    public void setServices(String services) {
+        this.services = services;
+    }
+
+    public Integer getMultipleBookings() {
+        return multipleBookings;
+    }
+
+    public void setMultipleBookings(Integer multipleBookings) {
+        this.multipleBookings = multipleBookings;
+    }
+
+    public Integer getConfirmEmail() {
+        return confirmEmail;
+    }
+
+    public void setConfirmEmail(Integer confirmEmail) {
+        this.confirmEmail = confirmEmail;
+    }
+
+    public Integer getConfirmTime() {
+        return confirmTime;
+    }
+
+    public void setConfirmTime(Integer confirmTime) {
+        this.confirmTime = confirmTime;
+    }
+
+    public String getUnidConfirmTime() {
+        return unidConfirmTime;
+    }
+
+    public void setUnidConfirmTime(String unidConfirmTime) {
+        this.unidConfirmTime = unidConfirmTime;
     }
 
     public static SchedulingBuilder builder() {
@@ -61,13 +123,19 @@ public class Scheduling {
     }
 
     public static class SchedulingBuilder {
-        private int id;
+        private Integer id;
         private String branchId;
         private String branchName;
-        private int minDays;
-        private int maxDays;
+        private Integer minDays;
+        private Integer maxDays;
+        private Integer toleranceTime;
+        private String services;
+        private Integer multipleBookings;
+        private Integer confirmEmail;
+        private Integer confirmTime;
+        private String unidConfirmTime;
 
-        public SchedulingBuilder id(int id) {
+        public SchedulingBuilder id(Integer id) {
             this.id = id;
             return this;
         }
@@ -82,18 +150,49 @@ public class Scheduling {
             return this;
         }
 
-        public SchedulingBuilder minDays(int minDays) {
+        public SchedulingBuilder minDays(Integer minDays) {
             this.minDays = minDays;
             return this;
         }
 
-        public SchedulingBuilder maxDays(int maxDays) {
+        public SchedulingBuilder maxDays(Integer maxDays) {
             this.maxDays = maxDays;
             return this;
         }
 
+        public SchedulingBuilder toleranceTime(Integer toleranceTime) {
+            this.toleranceTime = toleranceTime;
+            return this;
+        }
+
+        public SchedulingBuilder services(String services) {
+            this.services = services;
+            return this;
+        }
+
+        public SchedulingBuilder multipleBookings(Integer multipleBookings) {
+            this.multipleBookings = multipleBookings;
+            return this;
+        }
+
+        public SchedulingBuilder confirmEmail(Integer confirmEmail) {
+            this.confirmEmail = confirmEmail;
+            return this;
+        }
+
+        public SchedulingBuilder confirmTime(Integer confirmTime) {
+            this.confirmTime = confirmTime;
+            return this;
+        }
+
+        public SchedulingBuilder unidConfirmTime(String unidConfirmTime) {
+            this.unidConfirmTime = unidConfirmTime;
+            return this;
+        }
+
         public Scheduling build() {
-            return new Scheduling(id, branchId, branchName, minDays, maxDays);
+            return new Scheduling(id, branchId, branchName, minDays, maxDays, toleranceTime, services,
+                    multipleBookings, confirmEmail, confirmTime, unidConfirmTime);
         }
     }
 }
