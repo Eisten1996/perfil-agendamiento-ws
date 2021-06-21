@@ -35,8 +35,8 @@ public class SchedulingJdbcClient {
         );
     }
 
-    public int saveScheduling(Connection conexion, Scheduling scheduling) throws Exception {
-        PreparedStatement consulta = null;
+    public int saveScheduling(Connection connection, Scheduling scheduling) throws Exception {
+        PreparedStatement consult = null;
         int schedulingId = 0;
         try {
             String query = scheduling.getId() == 0
@@ -49,27 +49,27 @@ public class SchedulingJdbcClient {
                     + "BMULTIPLE = ?, BCONFIRMAREMAIL = ?, NTIEMPOCONFIREMAIL = ?, CUNIDTIEMPOCONFEMAIL = ? "
                     + "WHERE NCODPERFILAGENDAMIENTO = ? ";
 
-            consulta = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            consulta.setString(1, scheduling.getBranchId());
-            consulta.setInt(2, scheduling.getMinDays());
-            consulta.setInt(3, scheduling.getMaxDays());
-            consulta.setInt(4, scheduling.getToleranceTime());
-            consulta.setString(5, scheduling.getServices());
-            consulta.setInt(6, scheduling.getMultipleBookings());
-            consulta.setInt(7, scheduling.getConfirmEmail());
-            consulta.setObject(8, scheduling.getConfirmTime());
-            consulta.setString(9, scheduling.getUnidConfirmTime());
+            consult = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            consult.setString(1, scheduling.getBranchId());
+            consult.setInt(2, scheduling.getMinDays());
+            consult.setInt(3, scheduling.getMaxDays());
+            consult.setInt(4, scheduling.getToleranceTime());
+            consult.setString(5, scheduling.getServices());
+            consult.setInt(6, scheduling.getMultipleBookings());
+            consult.setInt(7, scheduling.getConfirmEmail());
+            consult.setObject(8, scheduling.getConfirmTime());
+            consult.setString(9, scheduling.getUnidConfirmTime());
 
             if (scheduling.getId() == 0) {
-                consulta.setTimestamp(10, new java.sql.Timestamp(System.currentTimeMillis()));
+                consult.setTimestamp(10, new java.sql.Timestamp(System.currentTimeMillis()));
             } else {
-                consulta.setInt(10, scheduling.getId());
+                consult.setInt(10, scheduling.getId());
             }
 
-            consulta.executeUpdate();
+            consult.executeUpdate();
 
             if (scheduling.getId() == 0) {
-                ResultSet rs = consulta.getGeneratedKeys();
+                ResultSet rs = consult.getGeneratedKeys();
                 if (rs.next()) {
                     schedulingId = rs.getInt(1);
                 }
@@ -80,8 +80,10 @@ public class SchedulingJdbcClient {
             System.out.println("saveScheduling: " + e.getMessage());
             throw e;
         } finally {
-            consulta.close();
+            consult.close();
         }
         return schedulingId;
     }
+
+
 }
