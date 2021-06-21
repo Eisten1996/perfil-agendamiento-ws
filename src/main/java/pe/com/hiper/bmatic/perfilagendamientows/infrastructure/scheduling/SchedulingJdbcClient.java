@@ -7,11 +7,11 @@ import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduli
 import java.util.List;
 
 @Component
-public class SchedulingClient {
+public class SchedulingJdbcClient {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public SchedulingClient(JdbcTemplate jdbcTemplate) {
+    public SchedulingJdbcClient(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

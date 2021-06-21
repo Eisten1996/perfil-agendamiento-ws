@@ -9,9 +9,9 @@ import java.util.List;
 @Component
 public class SchedulingRepositoryImpl implements SchedulingRepository {
 
-    private final SchedulingClient jdbcClient;
+    private final SchedulingJdbcClient jdbcClient;
 
-    public SchedulingRepositoryImpl(SchedulingClient jdbcClient) {
+    public SchedulingRepositoryImpl(SchedulingJdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 

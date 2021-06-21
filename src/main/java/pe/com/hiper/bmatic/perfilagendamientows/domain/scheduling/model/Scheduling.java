@@ -7,27 +7,13 @@ public class Scheduling {
     private String branchName;
     private int minDays;
     private int maxDays;
-    private int toleranceTime;
-    private String services;
-    private int multipleBookings;
-    private int confirmEmail;
-    private int confirmTime;
-    private String unidConfirmTime;
 
-    public Scheduling(int id, String branchId, String branchName, int minDays, int maxDays,
-                      int toleranceTime, String services, int multipleBookings, int confirmEmail,
-                      int confirmTime, String unidConfirmTime) {
+    public Scheduling(int id, String branchId, String branchName, int minDays, int maxDays) {
         this.id = id;
         this.branchId = branchId;
         this.branchName = branchName;
         this.minDays = minDays;
         this.maxDays = maxDays;
-        this.toleranceTime = toleranceTime;
-        this.services = services;
-        this.multipleBookings = multipleBookings;
-        this.confirmEmail = confirmEmail;
-        this.confirmTime = confirmTime;
-        this.unidConfirmTime = unidConfirmTime;
     }
 
     public int getId() {
@@ -70,54 +56,6 @@ public class Scheduling {
         this.maxDays = maxDays;
     }
 
-    public int getToleranceTime() {
-        return toleranceTime;
-    }
-
-    public void setToleranceTime(int toleranceTime) {
-        this.toleranceTime = toleranceTime;
-    }
-
-    public String getServices() {
-        return services;
-    }
-
-    public void setServices(String services) {
-        this.services = services;
-    }
-
-    public int getMultipleBookings() {
-        return multipleBookings;
-    }
-
-    public void setMultipleBookings(int multipleBookings) {
-        this.multipleBookings = multipleBookings;
-    }
-
-    public int getConfirmEmail() {
-        return confirmEmail;
-    }
-
-    public void setConfirmEmail(int confirmEmail) {
-        this.confirmEmail = confirmEmail;
-    }
-
-    public int getConfirmTime() {
-        return confirmTime;
-    }
-
-    public void setConfirmTime(int confirmTime) {
-        this.confirmTime = confirmTime;
-    }
-
-    public String getUnidConfirmTime() {
-        return unidConfirmTime;
-    }
-
-    public void setUnidConfirmTime(String unidConfirmTime) {
-        this.unidConfirmTime = unidConfirmTime;
-    }
-
     public static SchedulingBuilder builder() {
         return new SchedulingBuilder();
     }
@@ -128,12 +66,6 @@ public class Scheduling {
         private String branchName;
         private int minDays;
         private int maxDays;
-        private int toleranceTime;
-        private String services;
-        private int multipleBookings;
-        private int confirmEmail;
-        private Integer confirmTime;
-        private String unidConfirmTime;
 
         public SchedulingBuilder id(int id) {
             this.id = id;
@@ -160,39 +92,8 @@ public class Scheduling {
             return this;
         }
 
-        public SchedulingBuilder toleranceTime(int toleranceTime) {
-            this.toleranceTime = toleranceTime;
-            return this;
-        }
-
-        public SchedulingBuilder services(String services) {
-            this.services = services;
-            return this;
-        }
-
-        public SchedulingBuilder multipleBookings(int multipleBookings) {
-            this.multipleBookings = multipleBookings;
-            return this;
-        }
-
-        public SchedulingBuilder confirmEmail(int confirmEmail) {
-            this.confirmEmail = confirmEmail;
-            return this;
-        }
-
-        public SchedulingBuilder confirmTime(Integer confirmTime) {
-            this.confirmTime = confirmTime;
-            return this;
-        }
-
-        public SchedulingBuilder unidConfirmTime(String unidConfirmTime) {
-            this.unidConfirmTime = unidConfirmTime;
-            return this;
-        }
-
         public Scheduling build() {
-            return new Scheduling(id, branchId, branchName, minDays, maxDays, toleranceTime, services,
-                    multipleBookings, confirmEmail, confirmTime, unidConfirmTime);
+            return new Scheduling(id, branchId, branchName, minDays, maxDays);
         }
     }
 }
