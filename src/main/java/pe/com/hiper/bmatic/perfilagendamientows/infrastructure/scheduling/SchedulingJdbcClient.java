@@ -1,13 +1,12 @@
 package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.scheduling;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
 
 @Component
@@ -35,55 +34,43 @@ public class SchedulingJdbcClient {
         );
     }
 
-    public int saveScheduling(Connection connection, Scheduling scheduling) throws Exception {
-        PreparedStatement consult = null;
+    public int saveScheduling(Scheduling scheduling) {
+        StringBuilder query = new StringBuilder();
         int schedulingId = 0;
-        try {
-            String query = scheduling.getId() == 0
-                    ? "INSERT INTO TMPERFILAGENDAMIENTO (NCODAGENCIA, NNRODIASMINAGEND, NNRODIASMAXAGEND, NMINUTOSTOLERANCIA, CTICKETBASETIEMPO, "
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        if (scheduling.getId() == 0) {
+            query.append("INSERT INTO TMPERFILAGENDAMIENTO (NCODAGENCIA, NNRODIASMINAGEND, NNRODIASMAXAGEND, NMINUTOSTOLERANCIA, CTICKETBASETIEMPO, "
                     + " BMULTIPLE, BCONFIRMAREMAIL, NTIEMPOCONFIREMAIL, CUNIDTIEMPOCONFEMAIL, FFECCREACION)"
-                    + "VALUES(?, ? , ? , ? , ? , ?, ?, ?, ?, ?) "
-
-                    : "UPDATE TMPERFILAGENDAMIENTO " + "SET NCODAGENCIA = ?, "
+                    + "VALUES(?, ? , ? , ? , ? , ?, ?, ?, ?, ?) ");
+        } else {
+            query.append("UPDATE TMPERFILAGENDAMIENTO " + "SET NCODAGENCIA = ?, "
                     + "NNRODIASMINAGEND = ?, NNRODIASMAXAGEND = ?, NMINUTOSTOLERANCIA = ?, CTICKETBASETIEMPO = ?, "
                     + "BMULTIPLE = ?, BCONFIRMAREMAIL = ?, NTIEMPOCONFIREMAIL = ?, CUNIDTIEMPOCONFEMAIL = ? "
-                    + "WHERE NCODPERFILAGENDAMIENTO = ? ";
-
-            consult = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            consult.setString(1, scheduling.getBranchId());
-            consult.setInt(2, scheduling.getMinDays());
-            consult.setInt(3, scheduling.getMaxDays());
-            consult.setInt(4, scheduling.getToleranceTime());
-            consult.setString(5, scheduling.getServices());
-            consult.setInt(6, scheduling.getMultipleBookings());
-            consult.setInt(7, scheduling.getConfirmEmail());
-            consult.setObject(8, scheduling.getConfirmTime());
-            consult.setString(9, scheduling.getUnidConfirmTime());
-
-            if (scheduling.getId() == 0) {
-                consult.setTimestamp(10, new java.sql.Timestamp(System.currentTimeMillis()));
-            } else {
-                consult.setInt(10, scheduling.getId());
-            }
-
-            consult.executeUpdate();
-
-            if (scheduling.getId() == 0) {
-                ResultSet rs = consult.getGeneratedKeys();
-                if (rs.next()) {
-                    schedulingId = rs.getInt(1);
-                }
-            } else {
-                schedulingId = scheduling.getId();
-            }
-        } catch (Exception e) {
-            System.out.println("saveScheduling: " + e.getMessage());
-            throw e;
-        } finally {
-            consult.close();
+                    + "WHERE NCODPERFILAGENDAMIENTO = ? ");
+        }
+        jdbcTemplate.update(query.toString(), scheduling.getBranchId(), scheduling.getMinDays(),
+                scheduling.getMaxDays(), scheduling.getToleranceTime(), scheduling.getServices(),
+                scheduling.getMultipleBookings(), scheduling.getConfirmEmail(), scheduling.getConfirmTime(),
+                scheduling.getUnidConfirmTime(), scheduling.getId() == 0 ? new java.sql.Timestamp(System.currentTimeMillis())
+                        : scheduling.getId());
+        if (scheduling.getId() == 0) {
+            schedulingId = keyHolder.getKey().intValue();
+        } else {
+            schedulingId = scheduling.getId();
         }
         return schedulingId;
     }
 
+//    public boolean existsScheduling(String branchId) throws Exception {
+//        boolean exists = {false};
+//
+//        String query = "SELECT COUNT(1) FROM TMPERFILAGENDAMIENTO WHERE NCODAGENCIA = ?";
+//        jdbcTemplate.query(query, new Object[]{branchId},
+//                (ResultSetExtractor<Boolean>) (rs) ->
+//                        exists[0] = rs.getInt(1) == 1
+//        );
+//
+//        return exists[0];
+//    }
 
 }

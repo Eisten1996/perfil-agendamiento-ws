@@ -20,4 +20,19 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
 
         return jdbcClient.listSchedulings();
     }
+
+    @Override
+    public Integer saveScheduling(Scheduling scheduling) throws Exception {
+        int schedulingId = scheduling.getId();
+//        boolean save = false;
+//        if (schedulingId != 0) {
+//            save = true;
+//        } else {
+//            save = true;
+//        }
+//        if (save) {
+        schedulingId = jdbcClient.saveScheduling(scheduling);
+//        }
+        return schedulingId;
+    }
 }
