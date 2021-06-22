@@ -8,5 +8,7 @@ public interface SchedulingService {
 
     public List<Scheduling> getAllSchedulings();
 
-    public Integer saveScheduling(CreateSchedulingCommand command) throws Exception;
+    public Integer saveScheduling(CreateSchedulingCommand command);
+
+    public boolean deleteScheduling(String schedulingId);
 }

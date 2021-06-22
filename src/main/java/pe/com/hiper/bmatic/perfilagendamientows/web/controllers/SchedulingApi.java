@@ -21,5 +21,10 @@ public interface SchedulingApi {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Integer> saveScheduling(
             @RequestBody(required = true) CreateSchedulingCommandDTO command,
-            HttpServletRequest request) throws Exception;
+            HttpServletRequest request);
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping
+    ResponseEntity deleteScheduling(@RequestParam(value = "scheduling_id") String scheduling_id,
+                                    HttpServletRequest request);
 }

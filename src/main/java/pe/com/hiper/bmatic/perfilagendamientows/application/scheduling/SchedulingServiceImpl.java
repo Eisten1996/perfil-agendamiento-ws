@@ -20,7 +20,7 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public Integer saveScheduling(CreateSchedulingCommand command) throws Exception {
+    public Integer saveScheduling(CreateSchedulingCommand command) {
         Scheduling scheduling = Scheduling.builder()
                 .id(command.getId())
                 .branchId(command.getBranchId())
@@ -35,6 +35,13 @@ public class SchedulingServiceImpl implements SchedulingService {
                 .build();
         return schedulingRepository.saveScheduling(scheduling);
 
+    }
+
+    @Override
+    public boolean deleteScheduling(String schedulingId) {
+        schedulingRepository.deleteSchedulesById(schedulingId);
+        schedulingRepository.deleteSchedulingById(schedulingId);
+        return true;
     }
 
 }

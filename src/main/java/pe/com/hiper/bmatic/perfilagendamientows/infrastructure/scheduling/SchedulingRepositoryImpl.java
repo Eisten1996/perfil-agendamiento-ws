@@ -22,7 +22,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
     }
 
     @Override
-    public Integer saveScheduling(Scheduling scheduling) throws Exception {
+    public Integer saveScheduling(Scheduling scheduling) {
         int schedulingId = scheduling.getId();
         boolean save = false;
         if (schedulingId != 0) {
@@ -34,5 +34,15 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
             schedulingId = jdbcClient.saveScheduling(scheduling);
         }
         return schedulingId;
+    }
+
+    @Override
+    public void deleteSchedulingById(String schedulingId) {
+        this.jdbcClient.deleteSchedulingById(schedulingId);
+    }
+
+    @Override
+    public void deleteSchedulesById(String schedulingId) {
+        this.jdbcClient.deleteSchedulingById(schedulingId);
     }
 }
