@@ -7,4 +7,6 @@ import java.util.List;
 public interface SchedulingService {
 
     public List<Scheduling> getAllSchedulings();
+
+    public Integer saveScheduling(CreateSchedulingCommand command) throws Exception;
 }

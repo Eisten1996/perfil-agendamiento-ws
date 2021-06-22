@@ -18,4 +18,23 @@ public class SchedulingServiceImpl implements SchedulingService {
     public List<Scheduling> getAllSchedulings() {
         return schedulingRepository.findAllSchedulings();
     }
+
+    @Override
+    public Integer saveScheduling(CreateSchedulingCommand command) throws Exception {
+        Scheduling scheduling = Scheduling.builder()
+                .id(command.getId())
+                .branchId(command.getBranchId())
+                .minDays(command.getMinDays())
+                .maxDays(command.getMaxDays())
+                .toleranceTime(command.getToleranceTime())
+                .services(command.getServices())
+                .multipleBookings(command.getMultipleBookings())
+                .confirmEmail(command.getConfirmEmail())
+                .confirmTime(command.getConfirmTime())
+                .unidConfirmTime(command.getUnidConfirmTime())
+                .build();
+        return schedulingRepository.saveScheduling(scheduling);
+
+    }
+
 }

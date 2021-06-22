@@ -18,7 +18,6 @@ public class BranchJdbcClient {
 
     public List<Branch> getBranchListByUser(String userId, String branchId) {
         Object[] params;
-        PreparedStatement consult = null;
         String query = "SELECT cagencia, cagnombre FROM TMAGENCIA a"
                 + " inner join tausuagencia u on a.cagencia = u.cuaagencia"
                 + " where u.cuausuario = ? and a.cagencia not in"

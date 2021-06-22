@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SchedulingRepository {
     List<Scheduling> findAllSchedulings();
+
+    Integer saveScheduling(Scheduling scheduling) throws Exception;
 }
