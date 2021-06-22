@@ -27,7 +27,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
         boolean save = false;
         if (schedulingId != 0) {
             save = true;
-        } else if (jdbcClient.existsScheduling(scheduling.getBranchId())) {
+        } else if (!jdbcClient.existsScheduling(scheduling.getBranchId())) {
             save = true;
         }
         if (save) {
