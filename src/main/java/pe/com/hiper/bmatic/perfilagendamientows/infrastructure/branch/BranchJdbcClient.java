@@ -36,12 +36,11 @@ public class BranchJdbcClient {
         }
 
         return jdbcTemplate.query(query, params,
-                (rs, rowNum) -> {
-                    System.out.println("GAAAAAAAAA" + rs.getString(1));
-                    return Branch.builder()
-                            .codAgency(rs.getString(1))
-                            .agName(rs.getString(2))
-                            .build();
-                });
+                (rs, rowNum) ->
+                        Branch.builder()
+                                .codBranch(rs.getString(1))
+                                .agName(rs.getString(2))
+                                .build()
+        );
     }
 }
