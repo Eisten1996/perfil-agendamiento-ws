@@ -18,16 +18,16 @@ public class BranchApiController implements BranchApi {
     BranchService branchService;
 
     @Override
-    public ResponseEntity<List<BranchDTO>> getAgencies(HttpServletRequest request, String userId, String branchId) {
+    public ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request, String userId, String branchId) {
 
         List<BranchDTO> branchDTOS = new ArrayList<>();
-        List<Branch> agencies = branchService.getAllAgencies(userId, branchId);
+        List<Branch> branches = branchService.getAllBranches(userId, branchId);
 
-        agencies.forEach((o) -> branchDTOS.add(mapAgency(o)));
+        branches.forEach((o) -> branchDTOS.add(mapBranch(o)));
         return ResponseEntity.ok(branchDTOS);
     }
 
-    private BranchDTO mapAgency(Branch branch) {
+    private BranchDTO mapBranch(Branch branch) {
         return new BranchDTO(branch);
     }
 }

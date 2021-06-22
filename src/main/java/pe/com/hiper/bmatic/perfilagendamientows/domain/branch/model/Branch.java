@@ -25,26 +25,26 @@ public class Branch {
         this.name = name;
     }
 
-    public static Branch.AgencyBuilder builder() {
-        return new Branch.AgencyBuilder();
+    public static Branch.BranchBuilder builder() {
+        return new Branch.BranchBuilder();
     }
 
-    public static class AgencyBuilder {
-        private String codAgency;
+    public static class BranchBuilder {
+        private String codBranch;
         private String agName;
 
-        public AgencyBuilder codAgency(String codAgency) {
-            this.codAgency = codAgency;
+        public BranchBuilder codBranch(String codBranch) {
+            this.codBranch = codBranch;
             return this;
         }
 
-        public AgencyBuilder agName(String agName) {
+        public BranchBuilder agName(String agName) {
             this.agName = agName;
             return this;
         }
 
         public Branch build() {
-            return new Branch(codAgency, agName);
+            return new Branch(codBranch, agName);
         }
     }
 }
