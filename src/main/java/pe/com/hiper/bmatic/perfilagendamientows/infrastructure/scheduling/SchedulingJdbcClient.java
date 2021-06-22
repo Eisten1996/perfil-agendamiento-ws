@@ -53,7 +53,7 @@ public class SchedulingJdbcClient {
                     + "BMULTIPLE = ?, BCONFIRMAREMAIL = ?, NTIEMPOCONFIREMAIL = ?, CUNIDTIEMPOCONFEMAIL = ? "
                     + "WHERE NCODPERFILAGENDAMIENTO = ? ");
         }
-        
+
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(query.toString(), new String[]{"id_usuario"});
             ps.setString(1, scheduling.getBranchId());
@@ -80,16 +80,13 @@ public class SchedulingJdbcClient {
         return schedulingId;
     }
 
-//    public boolean existsScheduling(String branchId) throws Exception {
-//        boolean exists = {false};
-//
-//        String query = "SELECT COUNT(1) FROM TMPERFILAGENDAMIENTO WHERE NCODAGENCIA = ?";
-//        jdbcTemplate.query(query, new Object[]{branchId},
-//                (ResultSetExtractor<Boolean>) (rs) ->
-//                        exists[0] = rs.getInt(1) == 1
-//        );
-//
-//        return exists[0];
-//    }
+    public boolean existsScheduling(String branchId) throws Exception {
+        boolean exists = false;
+
+        String query = "SELECT COUNT(1) FROM TMPERFILAGENDAMIENTO WHERE NCODAGENCIA = ?";
+        exists = jdbcTemplate.queryForObject(query, new Object[]{branchId}, Integer.class) == 1;
+
+        return exists;
+    }
 
 }
