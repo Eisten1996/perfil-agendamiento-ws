@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
-@RequestMapping("/v1/scheduling")
+@RequestMapping("/v1/schedulings")
 public interface SchedulingApi {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

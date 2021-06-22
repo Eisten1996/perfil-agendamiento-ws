@@ -1,23 +1,22 @@
-package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.agency;
+package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.branch;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import pe.com.hiper.bmatic.perfilagendamientows.domain.agency.model.Agency;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.branch.model.Branch;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
 @Component
-public class AgencyJdbcClient {
+public class BranchJdbcClient {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public AgencyJdbcClient(JdbcTemplate jdbcTemplate) {
+    public BranchJdbcClient(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Agency> getBranchListByUser(String userId, String branchId) {
+    public List<Branch> getBranchListByUser(String userId, String branchId) {
         Object[] params;
         PreparedStatement consult = null;
         String query = "SELECT cagencia, cagnombre FROM TMAGENCIA a"
@@ -39,7 +38,7 @@ public class AgencyJdbcClient {
         return jdbcTemplate.query(query, params,
                 (rs, rowNum) -> {
                     System.out.println("GAAAAAAAAA" + rs.getString(1));
-                    return Agency.builder()
+                    return Branch.builder()
                             .codAgency(rs.getString(1))
                             .agName(rs.getString(2))
                             .build();

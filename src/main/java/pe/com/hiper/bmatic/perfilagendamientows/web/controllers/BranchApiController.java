@@ -1,0 +1,33 @@
+package pe.com.hiper.bmatic.perfilagendamientows.web.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+import pe.com.hiper.bmatic.perfilagendamientows.application.branch.BranchService;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.branch.model.Branch;
+import pe.com.hiper.bmatic.perfilagendamientows.web.models.BranchDTO;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+public class BranchApiController implements BranchApi {
+
+    @Autowired
+    BranchService branchService;
+
+    @Override
+    public ResponseEntity<List<BranchDTO>> getAgencies(HttpServletRequest request, String userId, String branchId) {
+
+        List<BranchDTO> branchDTOS = new ArrayList<>();
+        List<Branch> agencies = branchService.getAllAgencies(userId, branchId);
+
+        agencies.forEach((o) -> branchDTOS.add(mapAgency(o)));
+        return ResponseEntity.ok(branchDTOS);
+    }
+
+    private BranchDTO mapAgency(Branch branch) {
+        return new BranchDTO(branch);
+    }
+}
