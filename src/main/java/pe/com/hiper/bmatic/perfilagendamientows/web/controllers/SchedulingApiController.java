@@ -29,7 +29,7 @@ public class SchedulingApiController implements SchedulingApi {
     }
 
     @Override
-    public ResponseEntity<Integer> saveScheduling(CreateSchedulingCommandDTO body, HttpServletRequest request) throws Exception {
+    public ResponseEntity<Integer> saveScheduling(CreateSchedulingCommandDTO body, HttpServletRequest request) {
         CreateSchedulingCommand command = CreateSchedulingCommand.builder()
                 .id(body.getId())
                 .branchId(body.getBranchId())
@@ -44,6 +44,11 @@ public class SchedulingApiController implements SchedulingApi {
                 .build();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(schedulingService.saveScheduling(command));
+    }
+
+    @Override
+    public ResponseEntity deleteScheduling(String schedulingId, HttpServletRequest request) {
+        return ResponseEntity.ok().body(schedulingService.deleteScheduling(schedulingId));
     }
 
     private SchedulingDTO mapBranch(Scheduling scheduling) {

@@ -80,13 +80,23 @@ public class SchedulingJdbcClient {
         return schedulingId;
     }
 
-    public boolean existsScheduling(String branchId) throws Exception {
-        boolean exists = false;
+    public boolean existsScheduling(String branchId) {
+        boolean exists;
 
-        String query = "SELECT COUNT(1) FROM TMPERFILAGENDAMIENTO WHERE NCODAGENCIA = ?";
-        exists = jdbcTemplate.queryForObject(query, new Object[]{branchId}, Integer.class) == 1;
+        String query = "SELECT COUNT(1) FROM TMPERFILAGENDAMIENTO WHERE NCODAGENCIA = '" + branchId + "'";
+        exists = jdbcTemplate.queryForObject(query, Integer.class) == 1;
 
         return exists;
+    }
+
+    public void deleteSchedulingById(String schedulingId) {
+        String query = "DELETE FROM TMPERFILAGENDAMIENTO WHERE NCODPERFILAGENDAMIENTO = ? ";
+        jdbcTemplate.update(query, schedulingId);
+    }
+
+    public void deleteTypeSchedules(String schedulingId) {
+        String query = "DELETE FROM TMHORARIO WHERE NCODPERFILAGENDAMIENTO = ? ";
+        jdbcTemplate.update(query, schedulingId);
     }
 
 }

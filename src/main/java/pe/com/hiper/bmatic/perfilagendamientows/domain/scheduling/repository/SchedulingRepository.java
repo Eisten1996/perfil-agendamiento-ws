@@ -7,5 +7,9 @@ import java.util.List;
 public interface SchedulingRepository {
     List<Scheduling> findAllSchedulings();
 
-    Integer saveScheduling(Scheduling scheduling) throws Exception;
+    Integer saveScheduling(Scheduling scheduling);
+
+    void deleteSchedulingById(String schedulingId);
+
+    void deleteSchedulesById(String schedulingId);
 }
