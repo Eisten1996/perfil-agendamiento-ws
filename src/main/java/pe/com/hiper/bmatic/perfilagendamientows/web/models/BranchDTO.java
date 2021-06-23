@@ -2,13 +2,17 @@ package pe.com.hiper.bmatic.perfilagendamientows.web.models;
 
 import pe.com.hiper.bmatic.perfilagendamientows.domain.branch.model.Branch;
 
+import java.util.List;
+
 public class BranchDTO {
     private String id;
     private String name;
+    private List<ServiceDTO> services;
 
-    public BranchDTO(Branch branch) {
+    public BranchDTO(Branch branch, List<ServiceDTO> services) {
         this.id = branch.getId();
         this.name = branch.getName();
+        this.services = services;
     }
 
     public String getId() {
@@ -18,4 +22,9 @@ public class BranchDTO {
     public String getName() {
         return name;
     }
+
+    public List<ServiceDTO> getServices() {
+        return services;
+    }
+
 }
