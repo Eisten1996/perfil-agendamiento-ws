@@ -25,16 +25,19 @@ public class BranchApiController implements BranchApi {
     }
 
     @Override
-    public ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request, String userId, String branchId) {
+    public ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request, String userId) {
 
         List<BranchDTO> branchDTOS = new ArrayList<>();
-        List<Branch> branches = branchService.getAllBranches(userId, branchId);
+        List<Branch> branches = branchService.getAllBranches(userId);
 
-        List<ServiceDTO> serviceDTOS = new ArrayList<>();
-        List<Service> services = serviceService.getListServicesByBranch(branchId);
 
-        services.forEach((o) -> serviceDTOS.add(mapService(o)));
-        branches.forEach((o) -> branchDTOS.add(mapBranch(o, serviceDTOS)));
+//        services.forEach((o) -> serviceDTOS.add(mapService(o)));
+        branches.forEach((o) -> {
+            List<ServiceDTO> serviceDTOS = new ArrayList<>();
+            List<Service> services = serviceService.getListServicesByBranch(o.getId());
+            services.forEach((e) -> serviceDTOS.add(mapService(e)));
+            branchDTOS.add(mapBranch(o, serviceDTOS));
+        });
         return ResponseEntity.ok(branchDTOS);
     }
 

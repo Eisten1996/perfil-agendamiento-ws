@@ -16,7 +16,7 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public List<Branch> getAllBranches(String userId, String branchId) {
-        return branchRepository.getBranchListByUser(userId, branchId);
+    public List<Branch> getAllBranches(String userId) {
+        return branchRepository.getBranchListByUser(userId);
     }
 }

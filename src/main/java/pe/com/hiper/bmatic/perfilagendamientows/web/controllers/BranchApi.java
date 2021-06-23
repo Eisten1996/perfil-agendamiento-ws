@@ -15,6 +15,5 @@ public interface BranchApi {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request,
-                                                @RequestParam(value = "user_id", required = false) String userId,
-                                                @RequestParam(value = "branch_id", required = false) String branchId);
+                                                @RequestParam(value = "user_id", required = false) String userId);
 }
