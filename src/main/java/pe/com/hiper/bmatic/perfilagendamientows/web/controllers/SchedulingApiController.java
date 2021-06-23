@@ -51,6 +51,13 @@ public class SchedulingApiController implements SchedulingApi {
         return ResponseEntity.ok().body(schedulingService.deleteScheduling(schedulingId));
     }
 
+    @Override
+    public ResponseEntity<SchedulingDTO> getScheduling(String scheduling_id, HttpServletRequest request) {
+        Scheduling scheduling = schedulingService.getScheduling(scheduling_id);
+        SchedulingDTO schedulingDTO = mapBranch(scheduling);
+        return ResponseEntity.ok(schedulingDTO);
+    }
+
     private SchedulingDTO mapBranch(Scheduling scheduling) {
         return new SchedulingDTO(scheduling);
     }

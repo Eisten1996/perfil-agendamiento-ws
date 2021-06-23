@@ -7,9 +7,13 @@ import java.util.List;
 public interface SchedulingRepository {
     List<Scheduling> findAllSchedulings();
 
+    Scheduling getSchedulingById(String schedulingId);
+
     Integer saveScheduling(Scheduling scheduling);
 
     void deleteSchedulingById(String schedulingId);
 
     void deleteSchedulesById(String schedulingId);
+
+
 }

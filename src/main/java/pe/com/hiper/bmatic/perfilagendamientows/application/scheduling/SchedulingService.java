@@ -8,6 +8,8 @@ public interface SchedulingService {
 
     public List<Scheduling> getAllSchedulings();
 
+    public Scheduling getScheduling(String schedulingId);
+
     public Integer saveScheduling(CreateSchedulingCommand command);
 
     public boolean deleteScheduling(String schedulingId);

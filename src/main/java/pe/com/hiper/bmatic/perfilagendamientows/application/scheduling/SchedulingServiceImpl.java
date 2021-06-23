@@ -20,6 +20,11 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
+    public Scheduling getScheduling(String schedulingId) {
+        return schedulingRepository.getSchedulingById(schedulingId);
+    }
+
+    @Override
     public Integer saveScheduling(CreateSchedulingCommand command) {
         Scheduling scheduling = Scheduling.builder()
                 .id(command.getId())
