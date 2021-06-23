@@ -22,6 +22,11 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
     }
 
     @Override
+    public Scheduling getSchedulingById(String schedulingId) {
+        return jdbcClient.getScheduling(schedulingId);
+    }
+
+    @Override
     public Integer saveScheduling(Scheduling scheduling) {
         int schedulingId = scheduling.getId();
         boolean save = false;

@@ -39,6 +39,32 @@ public class SchedulingJdbcClient {
         );
     }
 
+    public Scheduling getScheduling(String schedulingId) {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT PA.NCODPERFILAGENDAMIENTO, AG.CAGNOMBRE, PA.NCODAGENCIA, PA.NNRODIASMINAGEND, PA.NNRODIASMAXAGEND, PA.NMINUTOSTOLERANCIA, PA.CTICKETBASETIEMPO," +
+                "PA.BMULTIPLE, PA.BCONFIRMAREMAIL, PA.NTIEMPOCONFIREMAIL, PA.CUNIDTIEMPOCONFEMAIL " +
+                "FROM TMPERFILAGENDAMIENTO PA INNER JOIN TMAGENCIA AG ON AG.CAGENCIA = PA.NCODAGENCIA " +
+                "WHERE PA.NCODPERFILAGENDAMIENTO = ?");
+        return jdbcTemplate.queryForObject(
+                query.toString(),
+                new Object[]{schedulingId},
+                (rs, rowNum) -> Scheduling.builder()
+                        .id(rs.getInt("NCODPERFILAGENDAMIENTO"))
+                        .branchId(rs.getString("NCODAGENCIA"))
+                        .branchName(rs.getString("CAGNOMBRE"))
+                        .minDays(rs.getInt("NNRODIASMINAGEND"))
+                        .maxDays(rs.getInt("NNRODIASMAXAGEND"))
+                        .toleranceTime(rs.getInt("NMINUTOSTOLERANCIA"))
+                        .services(rs.getString("CTICKETBASETIEMPO"))
+                        .multipleBookings(rs.getInt("BMULTIPLE"))
+                        .confirmEmail(rs.getInt("BCONFIRMAREMAIL"))
+                        .confirmTime(rs.getInt("NTIEMPOCONFIREMAIL"))
+                        .unidConfirmTime(rs.getString("CUNIDTIEMPOCONFEMAIL"))
+                        .build()
+        );
+
+    }
+
     public int saveScheduling(Scheduling scheduling) {
         StringBuilder query = new StringBuilder();
         int schedulingId = 0;

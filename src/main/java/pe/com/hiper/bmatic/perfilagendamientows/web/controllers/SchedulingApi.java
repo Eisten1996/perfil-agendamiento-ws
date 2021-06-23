@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
 import pe.com.hiper.bmatic.perfilagendamientows.web.commands.CreateSchedulingCommandDTO;
 import pe.com.hiper.bmatic.perfilagendamientows.web.models.SchedulingDTO;
 
@@ -27,4 +28,9 @@ public interface SchedulingApi {
     @DeleteMapping
     ResponseEntity deleteScheduling(@RequestParam(value = "scheduling_id") String scheduling_id,
                                     HttpServletRequest request);
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "getScheduling")
+    ResponseEntity<SchedulingDTO> getScheduling(@RequestParam(value = "scheduling_id") String scheduling_id,
+                                                HttpServletRequest request);
 }
