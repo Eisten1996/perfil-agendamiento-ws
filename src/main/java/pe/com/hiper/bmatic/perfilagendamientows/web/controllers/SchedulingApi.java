@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
 import pe.com.hiper.bmatic.perfilagendamientows.web.commands.CreateSchedulingCommandDTO;
 import pe.com.hiper.bmatic.perfilagendamientows.web.models.SchedulingDTO;
 
@@ -21,16 +20,16 @@ public interface SchedulingApi {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Integer> saveScheduling(
-            @RequestBody(required = true) CreateSchedulingCommandDTO command,
+            @RequestBody CreateSchedulingCommandDTO command,
             HttpServletRequest request);
 
-    @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping
-    ResponseEntity deleteScheduling(@RequestParam(value = "scheduling_id") String scheduling_id,
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(path = "/{scheduling_id}")
+    ResponseEntity<Void> deleteScheduling(@PathVariable String scheduling_id,
                                     HttpServletRequest request);
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "getScheduling")
-    ResponseEntity<SchedulingDTO> getScheduling(@RequestParam(value = "scheduling_id") String scheduling_id,
+    @GetMapping(path = "/{scheduling_id}")
+    ResponseEntity<SchedulingDTO> getScheduling(@PathVariable String scheduling_id,
                                                 HttpServletRequest request);
 }

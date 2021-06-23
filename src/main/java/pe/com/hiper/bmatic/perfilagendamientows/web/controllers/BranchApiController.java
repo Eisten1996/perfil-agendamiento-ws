@@ -1,6 +1,5 @@
 package pe.com.hiper.bmatic.perfilagendamientows.web.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import pe.com.hiper.bmatic.perfilagendamientows.application.branch.BranchService;
@@ -14,8 +13,11 @@ import java.util.List;
 @RestController
 public class BranchApiController implements BranchApi {
 
-    @Autowired
-    BranchService branchService;
+    private final BranchService branchService;
+
+    public BranchApiController(BranchService branchService) {
+        this.branchService = branchService;
+    }
 
     @Override
     public ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request, String userId, String branchId) {

@@ -1,6 +1,5 @@
 package pe.com.hiper.bmatic.perfilagendamientows.web.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +15,11 @@ import java.util.List;
 
 @RestController
 public class SchedulingApiController implements SchedulingApi {
-    @Autowired
-    SchedulingService schedulingService;
+    private final SchedulingService schedulingService;
+
+    public SchedulingApiController(SchedulingService schedulingService) {
+        this.schedulingService = schedulingService;
+    }
 
     @Override
     public ResponseEntity<List<SchedulingDTO>> getSchedulings(HttpServletRequest request) {
@@ -47,8 +49,9 @@ public class SchedulingApiController implements SchedulingApi {
     }
 
     @Override
-    public ResponseEntity deleteScheduling(String schedulingId, HttpServletRequest request) {
-        return ResponseEntity.ok().body(schedulingService.deleteScheduling(schedulingId));
+    public ResponseEntity<Void> deleteScheduling(String scheduling_id, HttpServletRequest request) {
+        schedulingService.deleteScheduling(scheduling_id);
+        return ResponseEntity.noContent().build();
     }
 
     @Override
