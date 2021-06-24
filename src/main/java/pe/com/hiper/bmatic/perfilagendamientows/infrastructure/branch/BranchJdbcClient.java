@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.branch.model.Branch;
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
 @Component
@@ -17,16 +16,12 @@ public class BranchJdbcClient {
     }
 
     public List<Branch> getBranchListByUser(String userId) {
-        Object[] params;
         String query = "SELECT cagencia, cagnombre FROM TMAGENCIA a"
                 + " inner join tausuagencia u on a.cagencia = u.cuaagencia"
                 + " where u.cuausuario = ? and a.cagencia not in"
-                + " (SELECT NCODAGENCIA FROM TMPERFILAGENDAMIENTO";
+                + " (SELECT NCODAGENCIA FROM TMPERFILAGENDAMIENTO) ORDER BY a.CAGNOMBRE";
 
-        query = query + ") ORDER BY a.CAGNOMBRE";
-        params = new Object[]{userId};
-
-        return jdbcTemplate.query(query, params,
+        return jdbcTemplate.query(query, new Object[]{userId},
                 (rs, rowNum) ->
                         Branch.builder()
                                 .codBranch(rs.getString(1))

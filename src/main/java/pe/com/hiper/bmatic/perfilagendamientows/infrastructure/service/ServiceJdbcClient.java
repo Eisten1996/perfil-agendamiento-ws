@@ -16,13 +16,6 @@ public class ServiceJdbcClient {
     }
 
     public List<Service> getServicesByBranch(String branchId) {
-//        String query = "SELECT DISTINCT TB.cTTBase, TB.dTTBNombre FROM TAUSUPERFIL X"
-//                + " INNER JOIN tattickperfil TA ON TA.CTTPPERFIL = X.CVPERFIL"
-//                + " INNER JOIN TMTTICKET TT ON TT.CTTICKET = TA.CTTPTICKET"
-//                + " INNER JOIN tmtticketbase TB ON TB.CTTBASE = TT.CTTTBASE"
-//                + " INNER JOIN TAUSUAGENCIA AG ON AG.CUAUSUARIO = X.CUAUSUARIO"
-//                + " WHERE AG.CUAAGENCIA = ?"
-//                + " ORDER BY TB.dTTBNombre";
         String query = "SELECT TB.CTTBASE, TB.DTTBNOMBRE FROM TMTTICKETBASE TB "
                 + " INNER JOIN TMAGENCIA AG ON AG.CAGGAGENCIA = TB.CTTGAGENCIA "
                 + " WHERE AG.CAGENCIA = ? "
