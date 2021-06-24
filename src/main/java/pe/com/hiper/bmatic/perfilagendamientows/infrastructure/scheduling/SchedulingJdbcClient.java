@@ -38,7 +38,7 @@ public class SchedulingJdbcClient {
     public Scheduling getScheduling(String schedulingId) {
         StringBuilder query = new StringBuilder();
         query.append("SELECT PA.NCODPERFILAGENDAMIENTO, AG.CAGNOMBRE, PA.NCODAGENCIA, PA.NNRODIASMINAGEND, PA.NNRODIASMAXAGEND, PA.NMINUTOSTOLERANCIA, PA.CTICKETBASETIEMPO," +
-                "PA.BMULTIPLE, PA.BCONFIRMAREMAIL, PA.NTIEMPOCONFIREMAIL, PA.CUNIDTIEMPOCONFEMAIL " +
+                "PA.BMULTIPLE, PA.BCONFIRMAREMAIL, PA.NTIEMPOCONFIREMAIL, PA.CUNIDTIEMPOCONFEMAIL, AG.CAGTIPOATENCION " +
                 "FROM TMPERFILAGENDAMIENTO PA INNER JOIN TMAGENCIA AG ON AG.CAGENCIA = PA.NCODAGENCIA " +
                 "WHERE PA.NCODPERFILAGENDAMIENTO = ?");
         return jdbcTemplate.queryForObject(
@@ -56,6 +56,7 @@ public class SchedulingJdbcClient {
                         .confirmEmail(rs.getInt("BCONFIRMAREMAIL"))
                         .confirmTime(rs.getInt("NTIEMPOCONFIREMAIL"))
                         .unidConfirmTime(rs.getString("CUNIDTIEMPOCONFEMAIL"))
+                        .typeAttention(rs.getString("CAGTIPOATENCION"))
                         .build()
         );
 

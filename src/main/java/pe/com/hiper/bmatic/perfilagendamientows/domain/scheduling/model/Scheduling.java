@@ -13,10 +13,11 @@ public class Scheduling {
     private Integer confirmEmail;
     private Integer confirmTime;
     private String unidConfirmTime;
+    private String typeAttention;
 
     public Scheduling(Integer id, String branchId, String branchName, Integer minDays, Integer maxDays,
                       Integer toleranceTime, String services, Integer multipleBookings, Integer confirmEmail,
-                      Integer confirmTime, String unidConfirmTime) {
+                      Integer confirmTime, String unidConfirmTime, String typeAttention) {
         this.id = id;
         this.branchId = branchId;
         this.branchName = branchName;
@@ -28,6 +29,7 @@ public class Scheduling {
         this.confirmEmail = confirmEmail;
         this.confirmTime = confirmTime;
         this.unidConfirmTime = unidConfirmTime;
+        this.typeAttention = typeAttention;
     }
 
     public Integer getId() {
@@ -118,6 +120,10 @@ public class Scheduling {
         this.unidConfirmTime = unidConfirmTime;
     }
 
+    public String getTypeAttention() {
+        return typeAttention;
+    }
+
     public static SchedulingBuilder builder() {
         return new SchedulingBuilder();
     }
@@ -134,6 +140,7 @@ public class Scheduling {
         private Integer confirmEmail;
         private Integer confirmTime;
         private String unidConfirmTime;
+        private String typeAttention;
 
         public SchedulingBuilder id(Integer id) {
             this.id = id;
@@ -190,9 +197,14 @@ public class Scheduling {
             return this;
         }
 
+        public SchedulingBuilder typeAttention(String typeAttention) {
+            this.typeAttention = typeAttention;
+            return this;
+        }
+
         public Scheduling build() {
             return new Scheduling(id, branchId, branchName, minDays, maxDays, toleranceTime, services,
-                    multipleBookings, confirmEmail, confirmTime, unidConfirmTime);
+                    multipleBookings, confirmEmail, confirmTime, unidConfirmTime, typeAttention);
         }
     }
 }
