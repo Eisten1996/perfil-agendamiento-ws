@@ -31,7 +31,6 @@ public class BranchApiController implements BranchApi {
         List<Branch> branches = branchService.getAllBranches(userId);
 
 
-//        services.forEach((o) -> serviceDTOS.add(mapService(o)));
         branches.forEach((o) -> {
             List<ServiceDTO> serviceDTOS = new ArrayList<>();
             List<Service> services = serviceService.getListServicesByBranch(o.getId());

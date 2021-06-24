@@ -16,7 +16,7 @@ public class CounterRepositoryImpl implements CounterRepository {
     }
 
     @Override
-    public List<Counter> getCounterList() {
-        return jdbcClient.getCounterList();
+    public List<Counter> getCounterList(String branchId) {
+        return jdbcClient.getCounterList(branchId);
     }
 }

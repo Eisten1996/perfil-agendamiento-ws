@@ -23,16 +23,8 @@ public class BranchJdbcClient {
                 + " where u.cuausuario = ? and a.cagencia not in"
                 + " (SELECT NCODAGENCIA FROM TMPERFILAGENDAMIENTO";
 
-//        if (!branchId.equalsIgnoreCase("0")) {
-//        query = query + " WHERE NCODAGENCIA != ?";
-//        }
         query = query + ") ORDER BY a.CAGNOMBRE";
-//
-//        if (!branchId.equalsIgnoreCase("0")) {
-//            params = new Object[]{userId, branchId};
-//        } else {
         params = new Object[]{userId};
-//        }
 
         return jdbcTemplate.query(query, params,
                 (rs, rowNum) ->

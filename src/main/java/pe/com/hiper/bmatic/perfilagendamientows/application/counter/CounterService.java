@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CounterService {
 
-    List<Counter> getCounterList();
+    List<Counter> getCounterList(String branchId);
 }

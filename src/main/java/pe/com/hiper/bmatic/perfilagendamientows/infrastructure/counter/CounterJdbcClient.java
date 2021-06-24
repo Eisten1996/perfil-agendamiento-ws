@@ -16,10 +16,13 @@ public class CounterJdbcClient {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Counter> getCounterList() {
-        String query = "SELECT CTVENTANILLA, DTVNOMBRE FROM TMTVENTANILLA ";
+    public List<Counter> getCounterList(String branchId) {
+        String query = "SELECT TV.CTVENTANILLA, TV.DTVNOMBRE FROM TMTVENTANILLA TV "
+                + " INNER JOIN TMVENTANILLA VEN ON VEN.CVTVENTANILLA = TV.CTVENTANILLA " +
+                " WHERE VEN.CVAGENCIA = ? "
+                +"ORDER BY TV.DTVNOMBRE";
 
-        return jdbcTemplate.query(query,
+        return jdbcTemplate.query(query, new Object[]{branchId},
                 (rs, rowNum) ->
                         Counter.builder()
                                 .id(rs.getString(1))

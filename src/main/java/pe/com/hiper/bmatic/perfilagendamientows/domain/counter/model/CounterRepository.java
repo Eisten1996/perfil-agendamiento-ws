@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface CounterRepository {
 
-    List<Counter> getCounterList();
+    List<Counter> getCounterList(String branchId);
 }

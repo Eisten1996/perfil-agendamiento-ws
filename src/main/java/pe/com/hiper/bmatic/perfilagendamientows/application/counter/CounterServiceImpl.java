@@ -16,7 +16,7 @@ public class CounterServiceImpl implements CounterService {
     }
 
     @Override
-    public List<Counter> getCounterList() {
-        return counterRepository.getCounterList();
+    public List<Counter> getCounterList(String branchId) {
+        return counterRepository.getCounterList(branchId);
     }
 }

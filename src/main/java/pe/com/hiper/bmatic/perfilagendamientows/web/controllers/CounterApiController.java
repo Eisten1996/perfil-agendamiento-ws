@@ -22,9 +22,9 @@ public class CounterApiController implements CounterApi {
     }
 
     @Override
-    public ResponseEntity<List<CounterDTO>> getListCounter(HttpServletRequest request) {
+    public ResponseEntity<List<CounterDTO>> getListCounter(HttpServletRequest request, String branchId) {
         List<CounterDTO> branchDTOS = new ArrayList<>();
-        List<Counter> counters = counterService.getCounterList();
+        List<Counter> counters = counterService.getCounterList(branchId);
 
         counters.forEach((o) -> branchDTOS.add(mapCounter(o)));
         return ResponseEntity.ok(branchDTOS);
