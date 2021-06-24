@@ -1,16 +1,12 @@
 package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.scheduling;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 

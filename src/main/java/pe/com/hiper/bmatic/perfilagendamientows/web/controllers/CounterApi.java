@@ -5,15 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pe.com.hiper.bmatic.perfilagendamientows.web.models.BranchDTO;
+import pe.com.hiper.bmatic.perfilagendamientows.web.models.CounterDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RequestMapping("/v1/branches")
-public interface BranchApi {
+@RequestMapping("/v1/counters")
+public interface CounterApi {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request,
-                                                @RequestParam(value = "user_id", required = false) String userId);
+    ResponseEntity<List<CounterDTO>> getListCounter(HttpServletRequest request,
+                                                    @RequestParam(value = "branch_id", required = false) String branchId);
 }

@@ -16,7 +16,7 @@ public class BranchRepositoryImpl implements BranchRepository {
     }
 
     @Override
-    public List<Branch> getBranchListByUser(String userId, String branchId) {
-        return jdbcClient.getBranchListByUser(userId, branchId);
+    public List<Branch> getBranchListByUser(String userId) {
+        return jdbcClient.getBranchListByUser(userId);
     }
 }

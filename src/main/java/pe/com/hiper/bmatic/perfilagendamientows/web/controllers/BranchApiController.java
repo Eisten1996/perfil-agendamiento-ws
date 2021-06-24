@@ -3,8 +3,11 @@ package pe.com.hiper.bmatic.perfilagendamientows.web.controllers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import pe.com.hiper.bmatic.perfilagendamientows.application.branch.BranchService;
+import pe.com.hiper.bmatic.perfilagendamientows.application.service.ServiceService;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.branch.model.Branch;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.service.model.Service;
 import pe.com.hiper.bmatic.perfilagendamientows.web.models.BranchDTO;
+import pe.com.hiper.bmatic.perfilagendamientows.web.models.ServiceDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -14,22 +17,34 @@ import java.util.List;
 public class BranchApiController implements BranchApi {
 
     private final BranchService branchService;
+    private final ServiceService serviceService;
 
-    public BranchApiController(BranchService branchService) {
+    public BranchApiController(BranchService branchService, ServiceService serviceService) {
         this.branchService = branchService;
+        this.serviceService = serviceService;
     }
 
     @Override
-    public ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request, String userId, String branchId) {
+    public ResponseEntity<List<BranchDTO>> getBranches(HttpServletRequest request, String userId) {
 
         List<BranchDTO> branchDTOS = new ArrayList<>();
-        List<Branch> branches = branchService.getAllBranches(userId, branchId);
+        List<Branch> branches = branchService.getAllBranches(userId);
 
-        branches.forEach((o) -> branchDTOS.add(mapBranch(o)));
+
+        branches.forEach((o) -> {
+            List<ServiceDTO> serviceDTOS = new ArrayList<>();
+            List<Service> services = serviceService.getListServicesByBranch(o.getId());
+            services.forEach((e) -> serviceDTOS.add(mapService(e)));
+            branchDTOS.add(mapBranch(o, serviceDTOS));
+        });
         return ResponseEntity.ok(branchDTOS);
     }
 
-    private BranchDTO mapBranch(Branch branch) {
-        return new BranchDTO(branch);
+    private BranchDTO mapBranch(Branch branch, List<ServiceDTO> services) {
+        return new BranchDTO(branch, services);
+    }
+
+    private ServiceDTO mapService(Service service) {
+        return new ServiceDTO(service);
     }
 }
