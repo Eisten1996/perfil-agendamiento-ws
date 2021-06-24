@@ -66,11 +66,11 @@ public class SchedulingApiController implements SchedulingApi {
     @Override
     public ResponseEntity<Void> saveListTypeScheduling(CreateTypeSchedulingCommandDTO body, HttpServletRequest request) {
         List<CreateTypeSchedulingCommand> command = new ArrayList<>();
-        body.getTypeSchedulingList().forEach(o -> {
+        body.getBookingTypeList().forEach(o -> {
             command.add(CreateTypeSchedulingCommand.builder()
                     .branchId(body.getBranchId())
-                    .counterId(o.getCounterId())
-                    .typeBooking(o.getTypeBooking())
+                    .counterId(o.getId())
+                    .typeBooking(o.getBookingType())
                     .schedulingId(o.getSchedulingId())
                     .build());
         });
