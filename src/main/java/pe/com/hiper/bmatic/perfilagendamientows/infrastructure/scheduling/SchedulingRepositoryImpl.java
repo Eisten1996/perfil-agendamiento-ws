@@ -2,6 +2,7 @@ package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.scheduling;
 
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.TypeScheduling;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.repository.SchedulingRepository;
 
 import java.util.List;
@@ -49,5 +50,9 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
     @Override
     public void deleteSchedulesById(String schedulingId) {
         this.jdbcClient.deleteTypeSchedules(schedulingId);
+    }
+
+    public int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId) {
+        return jdbcClient.saveTypeScheduling(typeSchedulingList, branchId);
     }
 }

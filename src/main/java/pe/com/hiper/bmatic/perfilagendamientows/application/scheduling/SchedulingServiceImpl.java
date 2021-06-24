@@ -2,8 +2,10 @@ package pe.com.hiper.bmatic.perfilagendamientows.application.scheduling;
 
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.TypeScheduling;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.repository.SchedulingRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -47,6 +49,24 @@ public class SchedulingServiceImpl implements SchedulingService {
         schedulingRepository.deleteSchedulesById(schedulingId);
         schedulingRepository.deleteSchedulingById(schedulingId);
         return true;
+    }
+
+    @Override
+    public int[] saveTypeSchedulingList(List<CreateTypeSchedulingCommand> commandList, String branchId) {
+        List<TypeScheduling> typeSchedulingList = new ArrayList<>();
+        if (!commandList.isEmpty()) {
+            commandList.forEach(o -> {
+                typeSchedulingList.add(TypeScheduling.builder()
+                        .branchId(o.getBranchId())
+                        .schedulingId(o.getSchedulingId())
+                        .counterId(o.getCounterId())
+                        .typeBooking(o.getTypeBooking())
+                        .build());
+            });
+        }
+        schedulingRepository.saveTypeScheduling(typeSchedulingList, branchId);
+
+        return new int[0];
     }
 
 }

@@ -1,12 +1,15 @@
 package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.scheduling;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.TypeScheduling;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -101,6 +104,32 @@ public class SchedulingJdbcClient {
             schedulingId = scheduling.getId();
         }
         return schedulingId;
+    }
+
+    public int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId) {
+        StringBuilder queryDelete = new StringBuilder();
+        StringBuilder queryInsert = new StringBuilder();
+
+        queryDelete.append("DELETE FROM TAVENTRESERVA WHERE CAGENCIA = ?; ");
+        queryInsert.append("INSERT INTO TAVENTRESERVA (NCODPERFILAGENDAMIENTO, CAGENCIA, CTVENTANILLA, BTKTIPORESERVA) " +
+                "VALUES(?,?,?,?); ");
+
+        jdbcTemplate.update(queryDelete.toString(), branchId);
+
+        return this.jdbcTemplate.batchUpdate(queryInsert.toString(),
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        ps.setInt(1, typeSchedulingList.get(i).getSchedulingId());
+                        ps.setString(2, typeSchedulingList.get(i).getBranchId());
+                        ps.setString(3, typeSchedulingList.get(i).getCounterId());
+                        ps.setString(4, typeSchedulingList.get(i).getTypeBooking());
+                    }
+
+                    public int getBatchSize() {
+                        return typeSchedulingList.size();
+                    }
+
+                });
     }
 
     public boolean existsScheduling(String branchId) {

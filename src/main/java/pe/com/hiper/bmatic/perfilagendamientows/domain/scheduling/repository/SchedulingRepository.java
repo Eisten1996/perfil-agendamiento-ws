@@ -1,6 +1,7 @@
 package pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.repository;
 
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.TypeScheduling;
 
 import java.util.List;
 
@@ -15,5 +16,6 @@ public interface SchedulingRepository {
 
     void deleteSchedulesById(String schedulingId);
 
+    int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId);
 
 }
