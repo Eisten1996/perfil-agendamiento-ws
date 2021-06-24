@@ -2,7 +2,7 @@ package pe.com.hiper.bmatic.perfilagendamientows.web.commands;
 
 import java.util.List;
 
-public class CreateTypeSchedulingCommandDTO {
+public class CreateCounterBookingCommandDTO {
     private String branchId;
     private List<BookingTypeCommandDTO> bookingTypeList;
 

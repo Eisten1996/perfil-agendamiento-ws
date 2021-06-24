@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.com.hiper.bmatic.perfilagendamientows.web.commands.CreateSchedulingCommandDTO;
-import pe.com.hiper.bmatic.perfilagendamientows.web.commands.CreateTypeSchedulingCommandDTO;
+import pe.com.hiper.bmatic.perfilagendamientows.web.commands.CreateCounterBookingCommandDTO;
 import pe.com.hiper.bmatic.perfilagendamientows.web.models.SchedulingDTO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public interface SchedulingApi {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "/saveListTypeScheduling")
-    ResponseEntity<Void> saveListTypeScheduling(
-            @RequestBody CreateTypeSchedulingCommandDTO command,
+    ResponseEntity<Void> saveCounterBookingList(
+            @RequestBody CreateCounterBookingCommandDTO command,
             HttpServletRequest request);
 }

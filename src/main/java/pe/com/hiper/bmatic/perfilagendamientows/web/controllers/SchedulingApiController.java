@@ -8,7 +8,7 @@ import pe.com.hiper.bmatic.perfilagendamientows.application.scheduling.CreateTyp
 import pe.com.hiper.bmatic.perfilagendamientows.application.scheduling.SchedulingService;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
 import pe.com.hiper.bmatic.perfilagendamientows.web.commands.CreateSchedulingCommandDTO;
-import pe.com.hiper.bmatic.perfilagendamientows.web.commands.CreateTypeSchedulingCommandDTO;
+import pe.com.hiper.bmatic.perfilagendamientows.web.commands.CreateCounterBookingCommandDTO;
 import pe.com.hiper.bmatic.perfilagendamientows.web.models.SchedulingDTO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +64,7 @@ public class SchedulingApiController implements SchedulingApi {
     }
 
     @Override
-    public ResponseEntity<Void> saveListTypeScheduling(CreateTypeSchedulingCommandDTO body, HttpServletRequest request) {
+    public ResponseEntity<Void> saveCounterBookingList(CreateCounterBookingCommandDTO body, HttpServletRequest request) {
         List<CreateTypeSchedulingCommand> command = new ArrayList<>();
         body.getBookingTypeList().forEach(o -> {
             command.add(CreateTypeSchedulingCommand.builder()
@@ -74,7 +74,7 @@ public class SchedulingApiController implements SchedulingApi {
                     .schedulingId(o.getSchedulingId())
                     .build());
         });
-        schedulingService.saveTypeSchedulingList(command, body.getBranchId());
+        schedulingService.saveBookingTypeList(command, body.getBranchId());
         return ResponseEntity.noContent().build();
     }
 

@@ -14,5 +14,5 @@ public interface SchedulingService {
 
     public boolean deleteScheduling(String schedulingId);
 
-    public int[] saveTypeSchedulingList(List<CreateTypeSchedulingCommand> commandList, String branchId);
+    public int[] saveBookingTypeList(List<CreateTypeSchedulingCommand> commandList, String branchId);
 }

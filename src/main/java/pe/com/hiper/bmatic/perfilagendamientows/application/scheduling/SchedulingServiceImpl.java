@@ -52,7 +52,7 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public int[] saveTypeSchedulingList(List<CreateTypeSchedulingCommand> commandList, String branchId) {
+    public int[] saveBookingTypeList(List<CreateTypeSchedulingCommand> commandList, String branchId) {
         List<TypeScheduling> typeSchedulingList = new ArrayList<>();
         if (!commandList.isEmpty()) {
             commandList.forEach(o -> {
