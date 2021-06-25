@@ -3,6 +3,7 @@ package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.counter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model.Counter;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model.TypeCounter;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class CounterJdbcClient {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Counter> getCounterList(String branchId) {
+    public List<TypeCounter> getTypeCounterList(String branchId) {
 
         String query = "SELECT TA.CTVENTANILLA, TV.DTVNOMBRE, TA.BTKTIPORESERVA  FROM TAVENTRESERVA TA " +
                 "INNER JOIN TMTVENTANILLA TV ON TV.CTVENTANILLA = TA.CTVENTANILLA where  TA.CAGENCIA = ?" +
@@ -27,11 +28,26 @@ public class CounterJdbcClient {
 
         return jdbcTemplate.query(query, new Object[]{branchId, branchId, branchId},
                 (rs, rowNum) ->
-                        Counter.builder()
+                        TypeCounter.builder()
                                 .id(rs.getString(1))
                                 .name(rs.getString(2))
                                 .bookingType(rs.getString(3))
                                 .build()
         );
     }
+
+    public List<Counter> getCounterList(String idTypeCounter, String branchId) {
+
+        String query = "SELECT CVENTANILLA, DVNOMBRE FROM TMVENTANILLA WHERE CVTVENTANILLA = ? AND CVAGENCIA = ?";
+
+        return jdbcTemplate.query(query, new Object[]{idTypeCounter, branchId},
+                (rs, rowNum) ->
+                        Counter.builder()
+                                .id(rs.getString(1))
+                                .name(rs.getString(2))
+                                .build()
+        );
+    }
+
+
 }
