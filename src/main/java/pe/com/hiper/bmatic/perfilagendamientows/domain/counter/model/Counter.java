@@ -3,12 +3,10 @@ package pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model;
 public class Counter {
     private String id;
     private String name;
-    private String bookingType;
 
-    public Counter(String id, String name, String bookingType) {
+    public Counter(String id, String name) {
         this.id = id;
         this.name = name;
-        this.bookingType = bookingType;
     }
 
     public String getId() {
@@ -27,22 +25,13 @@ public class Counter {
         this.name = name;
     }
 
-    public String getBookingType() {
-        return bookingType;
-    }
-
-    public void setBookingType(String bookingType) {
-        this.bookingType = bookingType;
-    }
-
-    public static Counter.CounterBuilder builder() {
-        return new Counter.CounterBuilder();
+    public static CounterBuilder builder() {
+        return new CounterBuilder();
     }
 
     public static class CounterBuilder {
         private String id;
         private String name;
-        private String bookingType;
 
         public CounterBuilder id(String id) {
             this.id = id;
@@ -54,13 +43,8 @@ public class Counter {
             return this;
         }
 
-        public CounterBuilder bookingType(String bookingType) {
-            this.bookingType = bookingType;
-            return this;
-        }
-
         public Counter build() {
-            return new Counter(id, name, bookingType);
+            return new Counter(id, name);
         }
     }
 }

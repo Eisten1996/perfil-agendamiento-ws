@@ -2,6 +2,7 @@ package pe.com.hiper.bmatic.perfilagendamientows.application.counter;
 
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model.Counter;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model.TypeCounter;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.repository.CounterRepository;
 
 import java.util.List;
@@ -16,7 +17,12 @@ public class CounterServiceImpl implements CounterService {
     }
 
     @Override
-    public List<Counter> getCounterList(String branchId) {
-        return counterRepository.getCounterList(branchId);
+    public List<TypeCounter> getTypeCounterList(String branchId) {
+        return counterRepository.getTypeCounterList(branchId);
+    }
+
+    @Override
+    public List<Counter> getCounterList(String idTypeCounter, String branchId) {
+        return counterRepository.getCounterList(idTypeCounter, branchId);
     }
 }
