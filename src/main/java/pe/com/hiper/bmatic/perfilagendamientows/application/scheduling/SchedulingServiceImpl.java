@@ -2,8 +2,10 @@ package pe.com.hiper.bmatic.perfilagendamientows.application.scheduling;
 
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.TypeScheduling;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.repository.SchedulingRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -44,9 +46,32 @@ public class SchedulingServiceImpl implements SchedulingService {
 
     @Override
     public boolean deleteScheduling(String schedulingId) {
-        schedulingRepository.deleteSchedulesById(schedulingId);
-        schedulingRepository.deleteSchedulingById(schedulingId);
+        Scheduling scheduling = this.schedulingRepository.getSchedulingById(schedulingId);
+        if (scheduling != null) {
+            schedulingRepository.deleteCounterBookings(scheduling.getBranchId());
+            schedulingRepository.deleteSchedulesById(scheduling.getId());
+            schedulingRepository.deleteSchedulingById(scheduling.getId());
+        }
+
         return true;
+    }
+
+    @Override
+    public int[] saveBookingTypeList(List<CreateTypeSchedulingCommand> commandList, String branchId) {
+        List<TypeScheduling> typeSchedulingList = new ArrayList<>();
+        if (!commandList.isEmpty()) {
+            commandList.forEach(o -> {
+                typeSchedulingList.add(TypeScheduling.builder()
+                        .branchId(o.getBranchId())
+                        .schedulingId(o.getSchedulingId())
+                        .counterId(o.getCounterId())
+                        .typeBooking(o.getTypeBooking())
+                        .build());
+            });
+        }
+        schedulingRepository.saveTypeScheduling(typeSchedulingList, branchId);
+
+        return new int[0];
     }
 
 }

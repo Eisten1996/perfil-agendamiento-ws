@@ -15,6 +15,7 @@ public class SchedulingDTO {
     private Integer confirmEmail;
     private Integer confirmTime;
     private String unidConfirmTime;
+    private String typeAttention;
 
     public SchedulingDTO(Scheduling scheduling) {
         this.id = scheduling.getId();
@@ -28,6 +29,7 @@ public class SchedulingDTO {
         this.confirmEmail = scheduling.getConfirmEmail();
         this.confirmTime = scheduling.getConfirmTime();
         this.unidConfirmTime = scheduling.getUnidConfirmTime();
+        this.typeAttention = scheduling.getTypeAttention();
     }
 
     public int getId() {
@@ -72,5 +74,9 @@ public class SchedulingDTO {
 
     public String getUnidConfirmTime() {
         return unidConfirmTime;
+    }
+
+    public String getTypeAttention() {
+        return typeAttention;
     }
 }

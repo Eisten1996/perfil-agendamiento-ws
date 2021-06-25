@@ -1,12 +1,15 @@
 package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.scheduling;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.TypeScheduling;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,7 +41,7 @@ public class SchedulingJdbcClient {
     public Scheduling getScheduling(String schedulingId) {
         StringBuilder query = new StringBuilder();
         query.append("SELECT PA.NCODPERFILAGENDAMIENTO, AG.CAGNOMBRE, PA.NCODAGENCIA, PA.NNRODIASMINAGEND, PA.NNRODIASMAXAGEND, PA.NMINUTOSTOLERANCIA, PA.CTICKETBASETIEMPO," +
-                "PA.BMULTIPLE, PA.BCONFIRMAREMAIL, PA.NTIEMPOCONFIREMAIL, PA.CUNIDTIEMPOCONFEMAIL " +
+                "PA.BMULTIPLE, PA.BCONFIRMAREMAIL, PA.NTIEMPOCONFIREMAIL, PA.CUNIDTIEMPOCONFEMAIL, AG.CAGTIPOATENCION " +
                 "FROM TMPERFILAGENDAMIENTO PA INNER JOIN TMAGENCIA AG ON AG.CAGENCIA = PA.NCODAGENCIA " +
                 "WHERE PA.NCODPERFILAGENDAMIENTO = ?");
         return jdbcTemplate.queryForObject(
@@ -56,6 +59,7 @@ public class SchedulingJdbcClient {
                         .confirmEmail(rs.getInt("BCONFIRMAREMAIL"))
                         .confirmTime(rs.getInt("NTIEMPOCONFIREMAIL"))
                         .unidConfirmTime(rs.getString("CUNIDTIEMPOCONFEMAIL"))
+                        .typeAttention(rs.getString("CAGTIPOATENCION"))
                         .build()
         );
 
@@ -102,6 +106,29 @@ public class SchedulingJdbcClient {
         return schedulingId;
     }
 
+    public int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId) {
+        StringBuilder queryInsert = new StringBuilder();
+
+        this.deleteCounterBookings(branchId);
+        queryInsert.append("INSERT INTO TAVENTRESERVA (NCODPERFILAGENDAMIENTO, CAGENCIA, CTVENTANILLA, BTKTIPORESERVA) " +
+                "VALUES(?,?,?,?); ");
+
+        return this.jdbcTemplate.batchUpdate(queryInsert.toString(),
+                new BatchPreparedStatementSetter() {
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        ps.setInt(1, typeSchedulingList.get(i).getSchedulingId());
+                        ps.setString(2, typeSchedulingList.get(i).getBranchId());
+                        ps.setString(3, typeSchedulingList.get(i).getCounterId());
+                        ps.setString(4, typeSchedulingList.get(i).getTypeBooking());
+                    }
+
+                    public int getBatchSize() {
+                        return typeSchedulingList.size();
+                    }
+
+                });
+    }
+
     public boolean existsScheduling(String branchId) {
         boolean exists;
 
@@ -111,14 +138,18 @@ public class SchedulingJdbcClient {
         return exists;
     }
 
-    public void deleteSchedulingById(String schedulingId) {
+    public void deleteSchedulingById(Integer schedulingId) {
         String query = "DELETE FROM TMPERFILAGENDAMIENTO WHERE NCODPERFILAGENDAMIENTO = ? ";
         jdbcTemplate.update(query, schedulingId);
     }
 
-    public void deleteTypeSchedules(String schedulingId) {
+    public void deleteTypeSchedules(Integer schedulingId) {
         String query = "DELETE FROM TMHORARIO WHERE NCODPERFILAGENDAMIENTO = ? ";
         jdbcTemplate.update(query, schedulingId);
     }
 
+    public void deleteCounterBookings(String branchId) {
+        String query = "DELETE FROM TAVENTRESERVA WHERE CAGENCIA = ?; ";
+        jdbcTemplate.update(query, branchId);
+    }
 }
