@@ -2,10 +2,15 @@ package pe.com.hiper.bmatic.perfilagendamientows.web.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import pe.com.hiper.bmatic.perfilagendamientows.application.asesor.AsesorService;
 import pe.com.hiper.bmatic.perfilagendamientows.application.counter.CounterService;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.asesor.model.Asesor;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model.Counter;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model.TypeCounter;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.service.model.Service;
+import pe.com.hiper.bmatic.perfilagendamientows.web.models.AsesorDTO;
 import pe.com.hiper.bmatic.perfilagendamientows.web.models.CounterDTO;
+import pe.com.hiper.bmatic.perfilagendamientows.web.models.ServiceDTO;
 import pe.com.hiper.bmatic.perfilagendamientows.web.models.TypeCounterDTO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +21,11 @@ import java.util.List;
 public class CounterApiController implements CounterApi {
 
     private final CounterService counterService;
+    private final AsesorService asesorService;
 
-    public CounterApiController(CounterService counterService) {
+    public CounterApiController(CounterService counterService, AsesorService asesorService) {
         this.counterService = counterService;
+        this.asesorService = asesorService;
     }
 
     @Override
@@ -49,4 +56,5 @@ public class CounterApiController implements CounterApi {
     private CounterDTO mapCounter(Counter counter) {
         return new CounterDTO(counter);
     }
+
 }
