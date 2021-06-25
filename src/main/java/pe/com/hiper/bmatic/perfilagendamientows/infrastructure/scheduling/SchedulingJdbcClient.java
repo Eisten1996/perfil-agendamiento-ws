@@ -107,14 +107,11 @@ public class SchedulingJdbcClient {
     }
 
     public int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId) {
-        StringBuilder queryDelete = new StringBuilder();
         StringBuilder queryInsert = new StringBuilder();
 
-        queryDelete.append("DELETE FROM TAVENTRESERVA WHERE CAGENCIA = ?; ");
+        this.deleteCounterBookings(branchId);
         queryInsert.append("INSERT INTO TAVENTRESERVA (NCODPERFILAGENDAMIENTO, CAGENCIA, CTVENTANILLA, BTKTIPORESERVA) " +
                 "VALUES(?,?,?,?); ");
-
-        jdbcTemplate.update(queryDelete.toString(), branchId);
 
         return this.jdbcTemplate.batchUpdate(queryInsert.toString(),
                 new BatchPreparedStatementSetter() {
@@ -141,14 +138,18 @@ public class SchedulingJdbcClient {
         return exists;
     }
 
-    public void deleteSchedulingById(String schedulingId) {
+    public void deleteSchedulingById(Integer schedulingId) {
         String query = "DELETE FROM TMPERFILAGENDAMIENTO WHERE NCODPERFILAGENDAMIENTO = ? ";
         jdbcTemplate.update(query, schedulingId);
     }
 
-    public void deleteTypeSchedules(String schedulingId) {
+    public void deleteTypeSchedules(Integer schedulingId) {
         String query = "DELETE FROM TMHORARIO WHERE NCODPERFILAGENDAMIENTO = ? ";
         jdbcTemplate.update(query, schedulingId);
     }
 
+    public void deleteCounterBookings(String branchId) {
+        String query = "DELETE FROM TAVENTRESERVA WHERE CAGENCIA = ?; ";
+        jdbcTemplate.update(query, branchId);
+    }
 }

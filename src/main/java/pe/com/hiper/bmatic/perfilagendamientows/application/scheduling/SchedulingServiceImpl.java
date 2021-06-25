@@ -46,8 +46,13 @@ public class SchedulingServiceImpl implements SchedulingService {
 
     @Override
     public boolean deleteScheduling(String schedulingId) {
-        schedulingRepository.deleteSchedulesById(schedulingId);
-        schedulingRepository.deleteSchedulingById(schedulingId);
+        Scheduling scheduling = this.schedulingRepository.getSchedulingById(schedulingId);
+        if (scheduling != null) {
+            schedulingRepository.deleteCounterBookings(scheduling.getBranchId());
+            schedulingRepository.deleteSchedulesById(scheduling.getId());
+            schedulingRepository.deleteSchedulingById(scheduling.getId());
+        }
+
         return true;
     }
 

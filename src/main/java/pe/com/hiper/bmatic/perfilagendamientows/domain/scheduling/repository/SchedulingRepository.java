@@ -12,9 +12,11 @@ public interface SchedulingRepository {
 
     Integer saveScheduling(Scheduling scheduling);
 
-    void deleteSchedulingById(String schedulingId);
+    void deleteSchedulingById(Integer schedulingId);
 
-    void deleteSchedulesById(String schedulingId);
+    void deleteSchedulesById(Integer schedulingId);
+
+    void deleteCounterBookings(String branchId);
 
     int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId);
 

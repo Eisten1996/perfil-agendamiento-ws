@@ -43,13 +43,18 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
     }
 
     @Override
-    public void deleteSchedulingById(String schedulingId) {
+    public void deleteSchedulingById(Integer schedulingId) {
         this.jdbcClient.deleteSchedulingById(schedulingId);
     }
 
     @Override
-    public void deleteSchedulesById(String schedulingId) {
+    public void deleteSchedulesById(Integer schedulingId) {
         this.jdbcClient.deleteTypeSchedules(schedulingId);
+    }
+
+    @Override
+    public void deleteCounterBookings(String branchId) {
+        this.jdbcClient.deleteCounterBookings(branchId);
     }
 
     public int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId) {
