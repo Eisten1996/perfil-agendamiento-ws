@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/v1/counters")
 public interface CounterApi {
 
-    @GetMapping(value = "TypeCounter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "types", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<TypeCounterDTO>> getListTypeCounter(HttpServletRequest request,
                                                             @RequestParam(value = "branch_id", required = false) String branchId);
 
