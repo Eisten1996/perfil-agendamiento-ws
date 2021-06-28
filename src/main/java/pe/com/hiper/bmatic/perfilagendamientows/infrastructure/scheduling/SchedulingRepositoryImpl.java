@@ -57,7 +57,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
         this.jdbcClient.deleteCounterBookings(branchId);
     }
 
-    public int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId) {
-        return jdbcClient.saveTypeScheduling(typeSchedulingList, branchId);
+    public void saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId) {
+        jdbcClient.saveTypeScheduling(typeSchedulingList, branchId);
     }
 }

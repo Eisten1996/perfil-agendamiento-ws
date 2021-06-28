@@ -18,6 +18,6 @@ public interface SchedulingRepository {
 
     void deleteCounterBookings(String branchId);
 
-    int[] saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId);
+    void saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId);
 
 }
