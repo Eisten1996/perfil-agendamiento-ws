@@ -2,18 +2,18 @@ package pe.com.hiper.bmatic.perfilagendamientows.web.commands;
 
 public class CreateScheduleCommandDTO {
 
-    private int id;
+    private String id;
     private Integer schedulingId;
     private String counterTypeId;
     private String counterId;
     private String bookingType;
-    private String startHour;
-    private String endHour;
+    private String start;
+    private String end;
     private int day;
     private String date;
     private int addDating;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -33,12 +33,12 @@ public class CreateScheduleCommandDTO {
         return bookingType;
     }
 
-    public String getStartHour() {
-        return startHour;
+    public String getStart() {
+        return start;
     }
 
-    public String getEndHour() {
-        return endHour;
+    public String getEnd() {
+        return end;
     }
 
     public int getDay() {

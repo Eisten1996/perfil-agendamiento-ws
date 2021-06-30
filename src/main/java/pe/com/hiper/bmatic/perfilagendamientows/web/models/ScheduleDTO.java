@@ -8,8 +8,8 @@ public class ScheduleDTO {
     private String counterTypeId;
     private String counterId;
     private String bookingType;
-    private String startHour;
-    private String endHour;
+    private String start;
+    private String end;
     private int day;
     private String date;
     private int addDating;
@@ -20,8 +20,8 @@ public class ScheduleDTO {
         this.counterTypeId = schedule.getCounterTypeId();
         this.counterId = schedule.getCounterId();
         this.bookingType = schedule.getBookingType();
-        this.startHour = schedule.getStartHour();
-        this.endHour = schedule.getEndHour();
+        this.start = schedule.getStart();
+        this.end = schedule.getEnd();
         this.day = schedule.getDay();
         this.date = schedule.getDate();
         this.addDating = schedule.getAddDating();
@@ -47,12 +47,12 @@ public class ScheduleDTO {
         return bookingType;
     }
 
-    public String getStartHour() {
-        return startHour;
+    public String getStart() {
+        return start;
     }
 
-    public String getEndHour() {
-        return endHour;
+    public String getEnd() {
+        return end;
     }
 
     public int getDay() {

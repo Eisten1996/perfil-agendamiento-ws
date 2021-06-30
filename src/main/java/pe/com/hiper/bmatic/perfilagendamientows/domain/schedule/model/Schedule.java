@@ -7,18 +7,18 @@ public class Schedule {
     private String counterTypeId;
     private String counterId;
     private String bookingType;
-    private String startHour;
-    private String endHour;
+    private String start;
+    private String end;
     private int day;
     private String date;
     private int addDating;
 
-    public Schedule(int id, String counterTypeId, String startHour, String endHour, int day, String date,
+    public Schedule(int id, String counterTypeId, String start, String end, int day, String date,
                     String counterId, int addDating, String bookingType, Integer schedulingId) {
         this.id = id;
         this.counterTypeId = counterTypeId;
-        this.startHour = startHour;
-        this.endHour = endHour;
+        this.start = start;
+        this.end = end;
         this.day = day;
         this.date = date;
         this.counterId = counterId;
@@ -43,20 +43,20 @@ public class Schedule {
         this.counterTypeId = counterTypeId;
     }
 
-    public String getStartHour() {
-        return startHour;
+    public String getStart() {
+        return start;
     }
 
-    public void setStartHour(String startHour) {
-        this.startHour = startHour;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public String getEndHour() {
-        return endHour;
+    public String getEnd() {
+        return end;
     }
 
-    public void setEndHour(String endHour) {
-        this.endHour = endHour;
+    public void setEndHour(String end) {
+        this.end = end;
     }
 
     public int getDay() {
@@ -115,8 +115,8 @@ public class Schedule {
 
         private int id;
         private String counterTypeId;
-        private String startHour;
-        private String endHour;
+        private String start;
+        private String end;
         private int day;
         private String counterId;
         private String date;
@@ -134,13 +134,13 @@ public class Schedule {
             return this;
         }
 
-        public ScheduleBuilder startHour(String startHour) {
-            this.startHour = startHour;
+        public ScheduleBuilder start(String start) {
+            this.start = start;
             return this;
         }
 
-        public ScheduleBuilder endHour(String endHour) {
-            this.endHour = endHour;
+        public ScheduleBuilder end(String end) {
+            this.end = end;
             return this;
         }
 
@@ -176,7 +176,7 @@ public class Schedule {
         }
 
         public Schedule build() {
-            return new Schedule(id, counterTypeId, startHour, endHour, day, date, counterId, addDating,
+            return new Schedule(id, counterTypeId, start, end, day, date, counterId, addDating,
                     bookingType, schedulingId);
         }
     }

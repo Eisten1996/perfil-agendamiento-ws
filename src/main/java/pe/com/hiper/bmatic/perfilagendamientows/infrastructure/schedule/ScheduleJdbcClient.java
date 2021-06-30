@@ -3,7 +3,6 @@ package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.schedule;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model.TypeCounter;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.schedule.model.Schedule;
 
 import java.sql.PreparedStatement;
@@ -26,8 +25,8 @@ public class ScheduleJdbcClient {
         this.jdbcTemplate.batchUpdate(queryInsert.toString(),
                 new BatchPreparedStatementSetter() {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setString(1, scheduleList.get(i).getStartHour());
-                        ps.setString(2, scheduleList.get(i).getEndHour());
+                        ps.setString(1, scheduleList.get(i).getStart());
+                        ps.setString(2, scheduleList.get(i).getEnd());
                         ps.setInt(3, scheduleList.get(i).getDay());
                         ps.setInt(4, scheduleList.get(i).getSchedulingId());
                         ps.setString(5, scheduleList.get(i).getCounterId());
@@ -53,20 +52,20 @@ public class ScheduleJdbcClient {
         String query = "SELECT NCODHORARIO, CHORAINICIO, CHORAFIN, NDIA, NCODPERFILAGENDAMIENTO, " +
                 "CCODVENTANILLA, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERID FROM TMHORARIO " +
                 "WHERE NCODPERFILAGENDAMIENTO = ? ";
-        return jdbcTemplate.query(query, new Object[]{schedulingId},
-                (rs, rowNum) ->
-                        Schedule.builder()
-                                .id(rs.getInt("NCODHORARIO"))
-                                .startHour(rs.getString("CHORAINICIO"))
-                                .endHour(rs.getString("CHORAFIN"))
-                                .day(rs.getInt("NDIA"))
-                                .schedulingId(rs.getInt("NCODPERFILAGENDAMIENTO"))
-                                .counterId(rs.getString("CCODVENTANILLA"))
-                                .date(rs.getString("NFECHA"))
-                                .addDating(rs.getInt("CCITAADICIONAL"))
-                                .bookingType(rs.getString("BOOKINGTYPE"))
-                                .counterTypeId(rs.getString("COUNTERID"))
-                                .build()
+        return jdbcTemplate.query(query, (rs, rowNum) ->
+        Schedule.builder()
+                .id(rs.getInt("NCODHORARIO"))
+                .start(rs.getString("NFECHA") + " " + rs.getString("CHORAINICIO"))
+                .end(rs.getString("NFECHA") + " " + rs.getString("CHORAFIN"))
+                .day(rs.getInt("NDIA"))
+                .schedulingId(rs.getInt("NCODPERFILAGENDAMIENTO"))
+                .counterId(rs.getString("CCODVENTANILLA"))
+                .date(rs.getString("NFECHA"))
+                .addDating(rs.getInt("CCITAADICIONAL"))
+                .bookingType(rs.getString("BOOKINGTYPE"))
+                .counterTypeId(rs.getString("COUNTERID"))
+                .build(), new Object[]{schedulingId}
+                
         );
     }
 }

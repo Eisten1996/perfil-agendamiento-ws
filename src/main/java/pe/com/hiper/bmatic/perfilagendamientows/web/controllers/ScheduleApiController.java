@@ -41,12 +41,12 @@ public class ScheduleApiController implements ScheduleApi {
         bodyList.forEach(o -> {
             command.add(CreateScheduleCommand.builder()
                     .addDating(o.getAddDating())
-                    .startHour(o.getStartHour())
+                    .startHour(o.getStart())
                     .schedulingId(o.getSchedulingId())
                     .counterId(o.getCounterId())
                     .date(o.getDate())
                     .counterTypeId(o.getCounterTypeId())
-                    .endHour(o.getEndHour())
+                    .endHour(o.getEnd())
                     .day(o.getDay())
                     .bookingType(o.getBookingType())
                     .build());

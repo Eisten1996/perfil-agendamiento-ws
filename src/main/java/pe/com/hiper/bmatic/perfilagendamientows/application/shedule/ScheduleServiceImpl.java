@@ -30,8 +30,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .date(o.getDate())
                         .counterId(o.getCounterId())
                         .counterTypeId(o.getCounterTypeId())
-                        .startHour(o.getStartHour())
-                        .endHour(o.getEndHour())
+                        .start(o.getStartHour())
+                        .end(o.getEndHour())
                         .build());
             });
         }
