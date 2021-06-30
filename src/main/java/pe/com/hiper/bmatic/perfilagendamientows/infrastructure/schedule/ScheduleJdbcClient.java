@@ -3,6 +3,7 @@ package pe.com.hiper.bmatic.perfilagendamientows.infrastructure.schedule;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.counter.model.TypeCounter;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.schedule.model.Schedule;
 
 import java.sql.PreparedStatement;
@@ -28,7 +29,7 @@ public class ScheduleJdbcClient {
                         ps.setString(1, scheduleList.get(i).getStartHour());
                         ps.setString(2, scheduleList.get(i).getEndHour());
                         ps.setInt(3, scheduleList.get(i).getDay());
-                        ps.setString(4, scheduleList.get(i).getSchedulingId());
+                        ps.setInt(4, scheduleList.get(i).getSchedulingId());
                         ps.setString(5, scheduleList.get(i).getCounterId());
                         ps.setTimestamp(6, new java.sql.Timestamp(System.currentTimeMillis()));
                         ps.setString(7, scheduleList.get(i).getDate());
@@ -46,5 +47,26 @@ public class ScheduleJdbcClient {
     public void deleteSchedulesById(Integer schedulingId) {
         String query = "DELETE FROM TMHORARIO WHERE NCODPERFILAGENDAMIENTO = ? ";
         jdbcTemplate.update(query, schedulingId);
+    }
+
+    public List<Schedule> getSchedulesById(Integer schedulingId) {
+        String query = "SELECT NCODHORARIO, CHORAINICIO, CHORAFIN, NDIA, NCODPERFILAGENDAMIENTO, " +
+                "CCODVENTANILLA, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERID FROM TMHORARIO " +
+                "WHERE NCODPERFILAGENDAMIENTO = ? ";
+        return jdbcTemplate.query(query, new Object[]{schedulingId},
+                (rs, rowNum) ->
+                        Schedule.builder()
+                                .id(rs.getInt("NCODHORARIO"))
+                                .startHour(rs.getString("CHORAINICIO"))
+                                .endHour(rs.getString("CHORAFIN"))
+                                .day(rs.getInt("NDIA"))
+                                .schedulingId(rs.getInt("NCODPERFILAGENDAMIENTO"))
+                                .counterId(rs.getString("CCODVENTANILLA"))
+                                .date(rs.getString("NFECHA"))
+                                .addDating(rs.getInt("CCITAADICIONAL"))
+                                .bookingType(rs.getString("BOOKINGTYPE"))
+                                .counterTypeId(rs.getString("COUNTERID"))
+                                .build()
+        );
     }
 }

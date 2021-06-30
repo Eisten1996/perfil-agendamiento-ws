@@ -38,4 +38,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleRepository.saveSchedules(scheduleList);
 
     }
+
+    @Override
+    public List<Schedule> getListSchedules(Integer schedulingId) {
+        return scheduleRepository.getListSchedulesById(schedulingId);
+    }
 }
