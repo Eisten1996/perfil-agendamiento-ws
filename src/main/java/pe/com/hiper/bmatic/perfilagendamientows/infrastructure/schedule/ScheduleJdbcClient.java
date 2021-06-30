@@ -18,11 +18,11 @@ public class ScheduleJdbcClient {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int[] saveSchedules(List<Schedule> scheduleList) {
+    public void saveSchedules(List<Schedule> scheduleList) {
         StringBuilder queryInsert = new StringBuilder();
         queryInsert.append("INSERT INTO TMHORARIO(CHORAINICIO, CHORAFIN, NDIA, NCODPERFILAGENDAMIENTO, CCODVENTANILLA" +
                 ", FECMODIFICACION, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERID )  VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-        return this.jdbcTemplate.batchUpdate(queryInsert.toString(),
+        this.jdbcTemplate.batchUpdate(queryInsert.toString(),
                 new BatchPreparedStatementSetter() {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setString(1, scheduleList.get(i).getStartHour());
@@ -41,5 +41,10 @@ public class ScheduleJdbcClient {
                         return scheduleList.size();
                     }
                 });
+    }
+
+    public void deleteSchedulesById(Integer schedulingId) {
+        String query = "DELETE FROM TMHORARIO WHERE NCODPERFILAGENDAMIENTO = ? ";
+        jdbcTemplate.update(query, schedulingId);
     }
 }

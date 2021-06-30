@@ -21,6 +21,12 @@ public class ScheduleApiController implements ScheduleApi {
 
     @Override
     public ResponseEntity<Void> saveScheduleList(List<CreateScheduleCommandDTO> bodyList, HttpServletRequest request) {
+        List<CreateScheduleCommand> command = mapListCreateScheduleCommandDTO(bodyList);
+        scheduleService.saveSchedules(command);
+        return ResponseEntity.noContent().build();
+    }
+
+    private List<CreateScheduleCommand> mapListCreateScheduleCommandDTO(List<CreateScheduleCommandDTO> bodyList) {
         List<CreateScheduleCommand> command = new ArrayList<>();
         bodyList.forEach(o -> {
             command.add(CreateScheduleCommand.builder()
@@ -35,7 +41,6 @@ public class ScheduleApiController implements ScheduleApi {
                     .bookingType(o.getBookingType())
                     .build());
         });
-        scheduleService.saveSchedules(command);
-        return ResponseEntity.noContent().build();
+        return command;
     }
 }

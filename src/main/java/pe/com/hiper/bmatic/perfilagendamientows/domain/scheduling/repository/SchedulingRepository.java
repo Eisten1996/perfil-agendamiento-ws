@@ -14,8 +14,6 @@ public interface SchedulingRepository {
 
     void deleteSchedulingById(Integer schedulingId);
 
-    void deleteSchedulesById(Integer schedulingId);
-
     void deleteCounterBookings(String branchId);
 
     void saveTypeScheduling(List<TypeScheduling> typeSchedulingList, String branchId);

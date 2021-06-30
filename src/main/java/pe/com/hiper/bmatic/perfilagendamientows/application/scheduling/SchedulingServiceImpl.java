@@ -1,6 +1,7 @@
 package pe.com.hiper.bmatic.perfilagendamientows.application.scheduling;
 
 import org.springframework.stereotype.Component;
+import pe.com.hiper.bmatic.perfilagendamientows.domain.schedule.repository.ScheduleRepository;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.Scheduling;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.model.TypeScheduling;
 import pe.com.hiper.bmatic.perfilagendamientows.domain.scheduling.repository.SchedulingRepository;
@@ -11,9 +12,11 @@ import java.util.List;
 @Component
 public class SchedulingServiceImpl implements SchedulingService {
     private final SchedulingRepository schedulingRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    public SchedulingServiceImpl(SchedulingRepository schedulingRepository) {
+    public SchedulingServiceImpl(SchedulingRepository schedulingRepository, ScheduleRepository scheduleRepository) {
         this.schedulingRepository = schedulingRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     @Override
@@ -49,7 +52,7 @@ public class SchedulingServiceImpl implements SchedulingService {
         Scheduling scheduling = this.schedulingRepository.getSchedulingById(schedulingId);
         if (scheduling != null) {
             schedulingRepository.deleteCounterBookings(scheduling.getBranchId());
-            schedulingRepository.deleteSchedulesById(scheduling.getId());
+            scheduleRepository.deleteSchedulesById(scheduling.getId());
             schedulingRepository.deleteSchedulingById(scheduling.getId());
         }
 
