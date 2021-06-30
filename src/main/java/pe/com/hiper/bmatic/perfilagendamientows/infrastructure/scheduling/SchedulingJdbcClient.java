@@ -143,11 +143,6 @@ public class SchedulingJdbcClient {
         jdbcTemplate.update(query, schedulingId);
     }
 
-    public void deleteTypeSchedules(Integer schedulingId) {
-        String query = "DELETE FROM TMHORARIO WHERE NCODPERFILAGENDAMIENTO = ? ";
-        jdbcTemplate.update(query, schedulingId);
-    }
-
     public void deleteCounterBookings(String branchId) {
         String query = "DELETE FROM TAVENTRESERVA WHERE CAGENCIA = ?; ";
         jdbcTemplate.update(query, branchId);
