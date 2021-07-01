@@ -16,8 +16,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public void saveSchedules(List<Schedule> scheduleList) {
-        deleteSchedulesById(scheduleList.get(0).getSchedulingId(), true);
+    public void saveSchedules(List<Schedule> scheduleList, Integer schedulingId) {
+        deleteSchedulesById(schedulingId, true);
         jdbcClient.saveSchedules(scheduleList);
     }
 

@@ -22,9 +22,9 @@ public class ScheduleApiController implements ScheduleApi {
     }
 
     @Override
-    public ResponseEntity<Void> saveScheduleList(List<CreateScheduleCommandDTO> bodyList, HttpServletRequest request) {
+    public ResponseEntity<Void> saveScheduleList(List<CreateScheduleCommandDTO> bodyList, String schedulingId, HttpServletRequest request) {
         List<CreateScheduleCommand> command = mapListCreateScheduleCommandDTO(bodyList);
-        scheduleService.saveSchedules(command);
+        scheduleService.saveSchedules(command, Integer.parseInt(schedulingId));
         return ResponseEntity.noContent().build();
     }
 

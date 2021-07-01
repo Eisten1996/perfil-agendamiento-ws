@@ -18,7 +18,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void saveSchedules(List<CreateScheduleCommand> commandList) {
+    public void saveSchedules(List<CreateScheduleCommand> commandList, Integer schedulingId) {
         List<Schedule> scheduleList = new ArrayList<>();
         if (!commandList.isEmpty()) {
             commandList.forEach(o -> {
@@ -35,7 +35,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .build());
             });
         }
-        scheduleRepository.saveSchedules(scheduleList);
+        scheduleRepository.saveSchedules(scheduleList, schedulingId);
 
     }
 

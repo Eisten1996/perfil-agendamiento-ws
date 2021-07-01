@@ -17,6 +17,7 @@ public interface ScheduleApi {
     @PostMapping()
     ResponseEntity<Void> saveScheduleList(
             @RequestBody List<CreateScheduleCommandDTO> commandList,
+            @RequestParam(value = "scheduling_id", required = false) String scheduling_id,
             HttpServletRequest request);
 
     @ResponseStatus(HttpStatus.OK)

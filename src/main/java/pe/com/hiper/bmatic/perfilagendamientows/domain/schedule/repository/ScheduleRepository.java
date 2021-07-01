@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ScheduleRepository {
 
-    void saveSchedules(List<Schedule> scheduleList);
+    void saveSchedules(List<Schedule> scheduleList, Integer schedulingId);
 
     void deleteSchedulesById(Integer schedulingId, boolean filter);
 
