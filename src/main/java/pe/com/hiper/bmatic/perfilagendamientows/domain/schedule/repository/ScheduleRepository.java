@@ -8,7 +8,7 @@ public interface ScheduleRepository {
 
     void saveSchedules(List<Schedule> scheduleList);
 
-    void deleteSchedulesById(Integer schedulingId);
+    void deleteSchedulesById(Integer schedulingId, boolean filter);
 
     List<Schedule> getListSchedulesById(Integer schedulingId);
 }

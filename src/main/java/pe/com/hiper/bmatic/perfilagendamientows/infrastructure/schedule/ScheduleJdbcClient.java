@@ -43,8 +43,11 @@ public class ScheduleJdbcClient {
                 });
     }
 
-    public void deleteSchedulesById(Integer schedulingId) {
+    public void deleteSchedulesById(Integer schedulingId, boolean filter) {
         String query = "DELETE FROM TMHORARIO WHERE NCODPERFILAGENDAMIENTO = ? ";
+        if (filter) {
+            query = query + " AND nfecha >= DATE(NOW())";
+        }
         jdbcTemplate.update(query, schedulingId);
     }
 

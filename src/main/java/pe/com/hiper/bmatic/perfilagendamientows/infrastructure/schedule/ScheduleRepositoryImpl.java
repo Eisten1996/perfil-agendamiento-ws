@@ -17,13 +17,13 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
 
     @Override
     public void saveSchedules(List<Schedule> scheduleList) {
-        deleteSchedulesById(scheduleList.get(0).getSchedulingId());
+        deleteSchedulesById(scheduleList.get(0).getSchedulingId(), true);
         jdbcClient.saveSchedules(scheduleList);
     }
 
     @Override
-    public void deleteSchedulesById(Integer schedulingId) {
-        this.jdbcClient.deleteSchedulesById(schedulingId);
+    public void deleteSchedulesById(Integer schedulingId, boolean filter) {
+        this.jdbcClient.deleteSchedulesById(schedulingId, filter);
     }
 
     @Override

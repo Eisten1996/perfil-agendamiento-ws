@@ -52,7 +52,7 @@ public class SchedulingServiceImpl implements SchedulingService {
         Scheduling scheduling = this.schedulingRepository.getSchedulingById(schedulingId);
         if (scheduling != null) {
             schedulingRepository.deleteCounterBookings(scheduling.getBranchId());
-            scheduleRepository.deleteSchedulesById(scheduling.getId());
+            scheduleRepository.deleteSchedulesById(scheduling.getId(), false);
             schedulingRepository.deleteSchedulingById(scheduling.getId());
         }
 
