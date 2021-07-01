@@ -48,11 +48,6 @@ public class SchedulingRepositoryImpl implements SchedulingRepository {
     }
 
     @Override
-    public void deleteSchedulesById(Integer schedulingId) {
-        this.jdbcClient.deleteTypeSchedules(schedulingId);
-    }
-
-    @Override
     public void deleteCounterBookings(String branchId) {
         this.jdbcClient.deleteCounterBookings(branchId);
     }

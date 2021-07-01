@@ -18,17 +18,17 @@ public class ScheduleJdbcClient {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int[] saveSchedules(List<Schedule> scheduleList) {
+    public void saveSchedules(List<Schedule> scheduleList) {
         StringBuilder queryInsert = new StringBuilder();
         queryInsert.append("INSERT INTO TMHORARIO(CHORAINICIO, CHORAFIN, NDIA, NCODPERFILAGENDAMIENTO, CCODVENTANILLA" +
                 ", FECMODIFICACION, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERID )  VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-        return this.jdbcTemplate.batchUpdate(queryInsert.toString(),
+        this.jdbcTemplate.batchUpdate(queryInsert.toString(),
                 new BatchPreparedStatementSetter() {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setString(1, scheduleList.get(i).getStartHour());
-                        ps.setString(2, scheduleList.get(i).getEndHour());
+                        ps.setString(1, scheduleList.get(i).getStart());
+                        ps.setString(2, scheduleList.get(i).getEnd());
                         ps.setInt(3, scheduleList.get(i).getDay());
-                        ps.setString(4, scheduleList.get(i).getSchedulingId());
+                        ps.setInt(4, scheduleList.get(i).getSchedulingId());
                         ps.setString(5, scheduleList.get(i).getCounterId());
                         ps.setTimestamp(6, new java.sql.Timestamp(System.currentTimeMillis()));
                         ps.setString(7, scheduleList.get(i).getDate());
@@ -41,5 +41,31 @@ public class ScheduleJdbcClient {
                         return scheduleList.size();
                     }
                 });
+    }
+
+    public void deleteSchedulesById(Integer schedulingId) {
+        String query = "DELETE FROM TMHORARIO WHERE NCODPERFILAGENDAMIENTO = ? ";
+        jdbcTemplate.update(query, schedulingId);
+    }
+
+    public List<Schedule> getSchedulesById(Integer schedulingId) {
+        String query = "SELECT NCODHORARIO, CHORAINICIO, CHORAFIN, NDIA, NCODPERFILAGENDAMIENTO, " +
+                "CCODVENTANILLA, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERID FROM TMHORARIO " +
+                "WHERE NCODPERFILAGENDAMIENTO = ? ";
+        return jdbcTemplate.query(query, (rs, rowNum) ->
+        Schedule.builder()
+                .id(rs.getInt("NCODHORARIO"))
+                .start(rs.getString("NFECHA") + " " + rs.getString("CHORAINICIO"))
+                .end(rs.getString("NFECHA") + " " + rs.getString("CHORAFIN"))
+                .day(rs.getInt("NDIA"))
+                .schedulingId(rs.getInt("NCODPERFILAGENDAMIENTO"))
+                .counterId(rs.getString("CCODVENTANILLA"))
+                .date(rs.getString("NFECHA"))
+                .addDating(rs.getInt("CCITAADICIONAL"))
+                .bookingType(rs.getString("BOOKINGTYPE"))
+                .counterTypeId(rs.getString("COUNTERID"))
+                .build(), new Object[]{schedulingId}
+                
+        );
     }
 }

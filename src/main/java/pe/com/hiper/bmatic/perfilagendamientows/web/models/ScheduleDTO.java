@@ -1,8 +1,9 @@
-package pe.com.hiper.bmatic.perfilagendamientows.web.commands;
+package pe.com.hiper.bmatic.perfilagendamientows.web.models;
 
-public class CreateScheduleCommandDTO {
+import pe.com.hiper.bmatic.perfilagendamientows.domain.schedule.model.Schedule;
 
-    private String id;
+public class ScheduleDTO {
+    private int id;
     private Integer schedulingId;
     private String counterTypeId;
     private String counterId;
@@ -13,7 +14,20 @@ public class CreateScheduleCommandDTO {
     private String date;
     private int addDating;
 
-    public String getId() {
+    public ScheduleDTO(Schedule schedule) {
+        this.id = schedule.getId();
+        this.schedulingId = schedule.getSchedulingId();
+        this.counterTypeId = schedule.getCounterTypeId();
+        this.counterId = schedule.getCounterId();
+        this.bookingType = schedule.getBookingType();
+        this.start = schedule.getStart();
+        this.end = schedule.getEnd();
+        this.day = schedule.getDay();
+        this.date = schedule.getDate();
+        this.addDating = schedule.getAddDating();
+    }
+
+    public int getId() {
         return id;
     }
 

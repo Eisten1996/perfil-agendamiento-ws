@@ -3,7 +3,7 @@ package pe.com.hiper.bmatic.perfilagendamientows.application.shedule;
 public class CreateScheduleCommand {
 
     private final int id;
-    private final String schedulingId;
+    private final Integer schedulingId;
     private final String counterTypeId;
     private final String counterId;
     private final String bookingType;
@@ -14,7 +14,7 @@ public class CreateScheduleCommand {
     private final int addDating;
 
 
-    public CreateScheduleCommand(int id, String schedulingId, String counterTypeId,
+    public CreateScheduleCommand(int id, Integer schedulingId, String counterTypeId,
                                  String counterId, String bookingType, String startHour,
                                  String endHour, int day, String date, int addDating) {
         this.id = id;
@@ -33,7 +33,7 @@ public class CreateScheduleCommand {
         return id;
     }
 
-    public String getSchedulingId() {
+    public Integer getSchedulingId() {
         return schedulingId;
     }
 
@@ -75,7 +75,7 @@ public class CreateScheduleCommand {
 
     public static class CreateScheduleCommandBuilder {
         private int id;
-        private String schedulingId;
+        private Integer schedulingId;
         private String counterTypeId;
         private String counterId;
         private String bookingType;
@@ -93,7 +93,7 @@ public class CreateScheduleCommand {
             return this;
         }
 
-        public CreateScheduleCommandBuilder schedulingId(final String schedulingId) {
+        public CreateScheduleCommandBuilder schedulingId(final Integer schedulingId) {
             this.schedulingId = schedulingId;
             return this;
         }
