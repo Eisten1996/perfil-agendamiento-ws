@@ -21,7 +21,7 @@ public class ScheduleJdbcClient {
     public void saveSchedules(List<Schedule> scheduleList) {
         StringBuilder queryInsert = new StringBuilder();
         queryInsert.append("INSERT INTO TMHORARIO(CHORAINICIO, CHORAFIN, NDIA, NCODPERFILAGENDAMIENTO, CCODVENTANILLA" +
-                ", FECMODIFICACION, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERID )  VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+                ", FECMODIFICACION, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERTYPEID )  VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
         this.jdbcTemplate.batchUpdate(queryInsert.toString(),
                 new BatchPreparedStatementSetter() {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
@@ -53,7 +53,7 @@ public class ScheduleJdbcClient {
 
     public List<Schedule> getSchedulesById(Integer schedulingId) {
         String query = "SELECT NCODHORARIO, CHORAINICIO, CHORAFIN, NDIA, NCODPERFILAGENDAMIENTO, " +
-                "CCODVENTANILLA, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERID FROM TMHORARIO " +
+                "CCODVENTANILLA, NFECHA, CCITAADICIONAL, BOOKINGTYPE, COUNTERTYPEID FROM TMHORARIO " +
                 "WHERE NCODPERFILAGENDAMIENTO = ? ";
         return jdbcTemplate.query(query, (rs, rowNum) ->
         Schedule.builder()
@@ -66,7 +66,7 @@ public class ScheduleJdbcClient {
                 .date(rs.getString("NFECHA"))
                 .addDating(rs.getInt("CCITAADICIONAL"))
                 .bookingType(rs.getString("BOOKINGTYPE"))
-                .counterTypeId(rs.getString("COUNTERID"))
+                .counterTypeId(rs.getString("COUNTERTYPEID"))
                 .build(), new Object[]{schedulingId}
                 
         );
