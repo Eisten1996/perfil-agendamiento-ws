@@ -1,0 +1,42 @@
+<div class="general__content">
+  <div class="configuration__buttons">
+    <a mat-button color="warn" (click)="cancel()" [disabled]="loading">
+      <mat-icon [inline]="true">cancel</mat-icon> Cancelar
+    </a>
+
+    <a mat-button color="primary" (click)="acceptButton()" [disabled]="loading">
+      <mat-icon [inline]="true">save</mat-icon> Aceptar
+    </a>
+
+    <mat-spinner color="primary" diameter="20" *ngIf="loading"></mat-spinner>
+
+  </div>
+
+  <div>
+    <app-stepper
+      [steps]="2"
+      [selected]="selected"
+      [steppers]="steppers"
+      (selectedEvent)="nextStepButton($event)"
+    ></app-stepper>
+  </div>
+
+  <div>
+    <app-information
+      #information
+      [onEdit]="onEdit"
+      [branches]="branches"
+      [configuration]="configuration"
+      (schedulingEmitter)="schedulingEmitter($event)"
+      [scheduling]="scheduling"
+      *ngIf="selected == 1"
+    ></app-information>
+
+    <app-schedules
+      #schedules
+      [scheduling]="scheduling"
+      (changeCounterTypeEmmiter)="changeCounterTypeEmmiter($event)"
+      *ngIf="selected == 2"
+    ></app-schedules>
+  </div>
+</div>

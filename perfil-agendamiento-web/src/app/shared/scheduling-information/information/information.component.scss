@@ -1,0 +1,28 @@
+@import "src/styles/styles.colors.scss";
+
+.item__section {
+    width: 60%;
+    padding-right: 15px;
+}
+
+.form-field {
+    width: 50px;
+    margin-right: 8px;
+}
+
+.form__label {
+    width: 250px;
+}
+
+.margin__item {
+    margin-top: 15px;
+}
+
+
+.section__services {
+    width: 40%;
+}
+
+.hr__line {
+    border-top: $color_accent;
+}

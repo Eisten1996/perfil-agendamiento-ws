@@ -1,0 +1,125 @@
+<div>
+  <div class="section__configuration">
+    <div>
+      <div class="title__schedules">
+        {{ scheduling?.branchName }}
+      </div>
+      <div class="border__configuration">
+        <div class="title__section">
+          <label> Asignación de horarios según tipo de ventanilla </label>
+        </div>
+
+        <div class="flex">
+          <div class="form__item">
+            <div class="form__label">Tipo de Ventanilla:</div>
+
+            <select
+              class="input__select"
+              name="counterTypeId"
+              [(ngModel)]="counterTypeSelected"
+              (ngModelChange)="changeCounterType()"
+            >
+              <option [ngValue]="undefined">
+                Seleccionar Tipo de ventanilla
+              </option>
+              <option
+                *ngFor="let counterType of counterTypes"
+                [ngValue]="counterType"
+              >
+                {{ counterType.nick }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form__item">
+            <div class="form__label">Tipo de Reserva:</div>
+
+            <select
+              class="input__select"
+              name="schedulingType"
+              [(ngModel)]="bookingTypeSelected"
+              (ngModelChange)="changeBookingType()"
+              [disabled]="counterTypeSelected === undefined"
+            >
+              <option [ngValue]="undefined" *ngIf="!counterTypeSelected">
+                Seleccionar Tipo de Reserva
+              </option>
+              <option
+                *ngFor="let schedulingType of bookingTypes"
+                [ngValue]="schedulingType"
+              >
+                {{ schedulingType.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="section__schedules"
+      *ngIf="counterTypeSelected && bookingTypeSelected && changingBookingType"
+    >
+      <div class="border__configuration">
+        <div class="title__section">
+          <label>
+            Horario de
+            {{
+              bookingTypeSelected?.id === BookingTypeId.CITA
+                ? "Asesores"
+                : "Ventanillas"
+            }}
+          </label>
+        </div>
+
+        <div class="flex">
+          <div class="form__item">
+            <div class="form__label">
+              {{
+                bookingTypeSelected?.id === BookingTypeId.CITA
+                  ? "Asesor"
+                  : "Ventanilla"
+              }}:
+            </div>
+
+            <select
+              class="input__select"
+              name="counterTypeId"
+              [(ngModel)]="counterSelected"
+              (ngModelChange)="changeCounter()"
+              [disabled]="
+                counterTypeSelected === undefined ||
+                bookingTypeSelected.id === BookingTypeId.NOT_BOOKING
+              "
+            >
+              <option [ngValue]="undefined">
+                Seleccionar
+                {{
+                  bookingTypeSelected?.id === BookingTypeId.CITA
+                    ? "Asesor"
+                    : "Ventanilla"
+                }}
+              </option>
+              <option
+                *ngFor="let counter of scheduleTypeList"
+                [ngValue]="counter"
+              >
+                {{ counter.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <app-calendar-main
+            [schedules]="schedules"
+            [schedulingId]="scheduling.id!"
+            [counterTypeSelected]="counterTypeSelected"
+            [counterSelected]="counterSelected"
+            [bookingTypeSelected]="bookingTypeSelected"
+          ></app-calendar-main>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+@import "src/styles/styles.colors.scss";
+
+table {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 15px;
+    border-collapse: collapse;
+}
+
+tbody tr:hover {
+    background-color: $color_accent;
+}
+
+table th:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+table th:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+th {
+    text-align: left;
+    padding: 6px;
+    border-bottom: solid 1px #e0e0e0;
+}
+
+td {
+    text-align: left;
+    padding: 2px;
+    border-bottom: solid 1px #e0e0e0;
+    cursor: pointer;
+}
+
+.form__label {
+    margin-right: 15px;
+}

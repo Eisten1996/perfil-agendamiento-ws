@@ -1,0 +1,218 @@
+<div>
+  <form class="section__configuration">
+    <div class="input__message">
+      <button mat-button *ngIf="messageError" color="accent">
+        <mat-icon [inline]="true">error</mat-icon>
+        <b>{{ messageError }}</b>
+      </button>
+    </div>
+    <div class="flex">
+      <div class="item__section border__configuration">
+        <div class="title__section">
+          <label> Información </label>
+        </div>
+
+        <div class="form__item">
+          <div class="form__label">Agencia:</div>
+
+          <select
+            [disabled]="onEdit"
+            class="input__select"
+            [(ngModel)]="branchSelected"
+            (ngModelChange)="changeBranch()"
+            name="branchId"
+          >
+            <option [ngValue]="undefined">Seleccionar Agencia</option>
+            <option [ngValue]="branchSelected" *ngIf="onEdit">
+              {{ scheduling.branchName }}
+            </option>
+            <option *ngFor="let branch of branches" [ngValue]="branch">
+              {{ branch.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="item__section__input">
+          <div class="form__item margin__item">
+            <div class="form__label">Máximo de días para agendar:</div>
+            <mat-form-field class="form-field">
+              <input
+                matInput
+                type="number"
+                id="maxDays"
+                name="maxDays"
+                [(ngModel)]="scheduling.maxDays"
+                min="0"
+                max="{{ configuration.maxDays }}"
+                required
+                [disabled]="loadingEdit"
+                (keypress)="inputUtil.numberOnly($event)"
+              />
+            </mat-form-field>
+            <div>
+              <mat-hint>días</mat-hint>
+            </div>
+          </div>
+
+          <div class="form__item margin__item">
+            <div class="form__label">Mínimo de días para agendar:</div>
+            <mat-form-field class="form-field">
+              <input
+                matInput
+                type="number"
+                id="minDays"
+                name="minDays"
+                min="{{ configuration.minDays }}"
+                max="{{ scheduling.maxDays! - 1 }}"
+                [(ngModel)]="scheduling.minDays"
+                required
+                [disabled]="loadingEdit"
+                (keypress)="inputUtil.numberOnly($event)"
+              />
+            </mat-form-field>
+            <div>
+              <mat-hint>días</mat-hint>
+            </div>
+          </div>
+
+          <div class="form__item margin__item">
+            <div class="form__label">Tiempo de Tolerancia:</div>
+            <mat-form-field class="form-field">
+              <input
+                matInput
+                type="number"
+                id="toleranceTime"
+                name="toleranceTime"
+                min="{{ configuration.minTolerance }}"
+                max="{{ configuration.maxTolerance }}"
+                [(ngModel)]="scheduling.toleranceTime"
+                required
+                [disabled]="loadingEdit"
+                (keypress)="inputUtil.numberOnly($event)"
+              />
+            </mat-form-field>
+            <div>
+              <mat-hint>minutos</mat-hint>
+            </div>
+          </div>
+
+          <div class="form__item margin__item">
+            <div class="form__label">
+              Permitir crear/activar más de una reserva:
+            </div>
+
+            <mat-slide-toggle
+              color="primary"
+              (change)="setConfirmMultipleBookings($event)"
+              [checked]="scheduling.multipleBookings == 1"
+              [disabled]="loadingEdit"
+            >
+            </mat-slide-toggle>
+          </div>
+
+          <div class="form__item margin__item">
+            <div class="form__label">Envío de confirmación de correo:</div>
+
+            <mat-slide-toggle
+              color="primary"
+              (change)="setConfirmEmail($event)"
+              [checked]="scheduling.confirmEmail == 1"
+              [disabled]="loadingEdit"
+            >
+            </mat-slide-toggle>
+          </div>
+
+          <div
+            class="form__item margin__item"
+            *ngIf="scheduling.confirmEmail == 1 && !loadingEdit"
+          >
+            <div class="form__label">Tiempo máximo para confirmar:</div>
+            <mat-form-field class="form-field">
+              <input
+                matInput
+                type="number"
+                id="confirmTime"
+                name="confirmTime"
+                min="{{ configuration.minConfirmTime }}"
+                max="{{ configuration.maxConfirmTime }}"
+                [(ngModel)]="scheduling.confirmTime"
+                (keypress)="inputUtil.numberOnly($event)"
+                required
+              />
+            </mat-form-field>
+            <div>
+              <mat-radio-group
+                [(ngModel)]="scheduling.unidConfirmTime"
+                name="unidConfirmTime"
+              >
+                <mat-hint
+                  ><mat-radio-button value="m"
+                    >minutos</mat-radio-button
+                  ></mat-hint
+                >
+                <mat-hint
+                  ><mat-radio-button value="h"
+                    >horas</mat-radio-button
+                  ></mat-hint
+                >
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border__configuration section__services">
+        <div class="title__section">
+          <label> Duración de Servicios </label>
+        </div>
+
+        <div class="margin__item"  style="overflow-y: auto; height: 450px">
+          <div *ngIf="!branchSelected">
+            <mat-hint
+              >Seleccione una agencia para mostrar los servicios</mat-hint
+            >
+          </div>
+          <div *ngIf="services?.length === 0 && branchSelected.id !== '0'">
+            <mat-hint>No hay servicios disponibles</mat-hint>
+          </div>
+          <mat-spinner
+            color="primary"
+            diameter="20"
+            *ngIf="loading"
+          ></mat-spinner>
+          <div *ngFor="let service of services">
+            <div class="form__item">
+              <div class="form__label">{{ service.name }}:</div>
+              <mat-form-field class="form-field">
+                <input
+                  matInput
+                  type="number"
+                  [value]="service.duration"
+                  id="{{ service.id }}"
+                  name="{{ service.id }}"
+                  min="0"
+                  max="360"
+                  step="{{ configuration.durationService }}"
+                  [(ngModel)]="service.duration"
+                  required
+                  (keypress)="inputUtil.numberOnly($event)"
+                />
+              </mat-form-field>
+              <div>
+                <mat-hint>minutos</mat-hint>
+              </div>
+            </div>
+            <hr class="hr__line" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="action__buttons">
+    <button mat-raised-button color="accent" (click)="saveScheduling()">
+      Siguiente
+      <mat-icon [inline]="true">arrow_forward_ios</mat-icon>
+      <mat-icon [inline]="true">arrow_forward_ios</mat-icon>
+    </button>
+  </div>
+</div>

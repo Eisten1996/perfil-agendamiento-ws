@@ -1,0 +1,139 @@
+@import "src/styles/styles.colors.scss";
+
+.title__event {
+    color: white;
+    border-radius: 8px;
+    background: linear-gradient(
+        270deg,
+        rgba(136, 108, 204, 1) 0%,
+        rgba(81, 48, 162, 1) 51%,
+        rgba(81, 48, 162, 1) 98%
+    ) !important;
+}
+
+.dialog__event__container {
+    position: relative;
+}
+
+.button__actions__dialog {
+    margin-top: 15px;
+    text-align: right;
+}
+.message__dialog {
+    font-size: 18px;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.form__label {
+    font-size: 15px;
+    width: 100px;
+    color: $color_primary;
+}
+
+.form__label__lg {
+    font-size: 15px;
+    width: 170px;
+    color: $color_primary;
+}
+
+.form__label__md {
+    font-size: 15px;
+    width: 110px;
+    color: $color_primary;
+}
+
+.form__schedule__content {
+    margin-top: 10px;
+}
+.margin__item {
+    margin-top: 15px;
+}
+
+.margin__item__left {
+    margin-left: 15px;
+}
+
+.moda__input {
+    padding: 5px 10px;
+    background-color: rgb(243, 243, 243);
+    border-radius: 10px;
+    color: $color_primary !important;
+}
+
+.moda__input__sm {
+    width: 55px;
+    padding: 10px;
+    background-color: rgb(243, 243, 243);
+    border-radius: 10px;
+    color: $color_primary !important;
+}
+
+.schedule__day {
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 17px;
+}
+
+
+
+::ng-deep {
+    .mat-fab:not([class*="mat-elevation-z"]),
+    .mat-mini-fab:not([class*="mat-elevation-z"]) {
+        box-shadow: none !important;
+    }
+    
+    .mat-form-field-appearance-legacy .mat-form-field-underline {
+        background-color: transparent !important;
+    }
+    
+    .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+        padding-bottom: 18px;
+    }
+
+    .mat-mini-fab {
+        background: transparent;
+        color: white;
+    }
+
+
+}
+
+
+.btn {
+    width: 50%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+
+.btn__close {
+    position: absolute;
+    right: 0;
+    top: 4px;
+}
+
+.remove__background__input {
+    color: $color_primary;
+    text-align: center;
+    width: 50px;
+    background: transparent;
+    border: none;
+    font-size: 17px;
+    margin-left: 5px;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+} */
+
+input:focus {
+    outline: none;
+}

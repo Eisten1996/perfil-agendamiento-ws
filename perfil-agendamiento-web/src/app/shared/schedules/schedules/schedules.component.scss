@@ -1,0 +1,25 @@
+@import "src/styles/styles.colors.scss";
+
+
+.form__item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.form__label {
+    margin-right: 15px;
+}
+
+.title__schedules {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px;
+    color: $color_primary;
+}
+
+
+.section__schedules {
+    margin-top: 15px;
+}

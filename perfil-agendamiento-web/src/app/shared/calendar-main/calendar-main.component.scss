@@ -1,0 +1,39 @@
+@import "src/styles/styles.colors.scss";
+@import "src/styles/styles.font.scss";
+::ng-deep {
+    .fc .fc-col-header-cell-cushion {
+        font-size: 17px !important;
+    }
+
+    .fc .fc-button-primary {
+        background-color: $color_primary !important;
+    }
+
+    .mat-h2,
+    .mat-title,
+    .mat-typography h2 {
+        font-family: $font-family, sans-serif;
+        font-weight: bold;
+    }
+    .fc .fc-scroller-harness {
+        overflow: hidden !important;
+    }
+
+    .fc,
+    .fc *,
+    .fc :after,
+    .fc :before {
+        box-sizing: content-box !important;
+    }
+
+    .fc-v-event {
+        background: linear-gradient(0deg, #886ccc 0%, #5130a2 51%, #5130a2 98%) !important;
+        border: none !important;
+        font-size: 17px !important;
+    }
+}
+
+.btn__duplicate {
+    position: absolute;
+    font-size: 15.5px !important;
+}

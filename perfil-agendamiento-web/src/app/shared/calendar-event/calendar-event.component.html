@@ -1,0 +1,132 @@
+<div class="dialog__event__container">
+  <div class="btn__close">
+    <button
+      mat-mini-fab
+      color="default"
+      title="Cerrar"
+      [mat-dialog-close]="true"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="scheduling__title title__event">
+    {{ data.action == "create" ? "Nuevo Horario" : "Modificar Horario" }}
+  </div>
+
+  <div class="form__schedule__content">
+    <div class="form__item margin__item">
+      <div class="form__label">Día:</div>
+
+      <div class="schedule__day">{{ dayName }}</div>
+      <mat-form-field appearance="legacy" class="form__label__md">
+        <input
+          matInput
+          [matDatepicker]="picker2"
+          [(ngModel)]="dateSelected"
+          [min]="minDate"
+          (dateChange)="changeDateInput()"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker2"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker2 color="primary"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <div class="form__item margin__item">
+        <div class="form__label">Hora Inicio:</div>
+
+        <div class="flex moda__input">
+          <input
+            class="remove__background__input"
+            type="number"
+            [(ngModel)]="startHour"
+            (keypress)="inputUtil.numberOnly($event)"
+            (change)="changeHour('start')"
+            max="{{ endHour }}"
+            min="0"
+          />
+          :
+          <input
+            class="remove__background__input"
+            type="number"
+            [(ngModel)]="startMinute"
+            (keypress)="inputUtil.numberOnly($event)"
+            (change)="changeMinute('start')"
+            min="0"
+            max="59"
+            step="{{ configuration.durationService }}"
+          />
+        </div>
+      </div>
+
+      <div class="form__item margin__item">
+        <div class="form__label">Hora Fin:</div>
+
+        <div class="flex moda__input">
+          <input
+            class="remove__background__input"
+            type="number"
+            [(ngModel)]="endHour"
+            (keypress)="inputUtil.numberOnly($event)"
+            (change)="changeHour('end')"
+            max="23"
+            min="{{ startHour }}"
+          />
+          :
+          <input
+            class="remove__background__input"
+            type="number"
+            [(ngModel)]="endMinute"
+            (keypress)="inputUtil.numberOnly($event)"
+            (change)="changeMinute('end')"
+            min="0"
+            max="59"
+            maxlength="2"
+            step="{{ configuration.durationService }}"
+          />
+        </div>
+      </div>
+
+      <div class="form__item margin__item">
+        <div class="form__label__lg">Cantidad Citas Adicionales:</div>
+
+        <mat-form-field class="moda__input__sm form__label">
+          <input
+            matInput
+            type="number"
+            id="addDating"
+            name="addDating"
+            [(ngModel)]="schedule.addDating"
+            min="0"
+            max="{{ configuration.maxAddDating }}"
+            maxlength="2"
+            required
+            (keypress)="inputUtil.numberOnly($event)"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="message__error" *ngIf="messageError">
+      {{ messageError }}
+    </div>
+
+    <div class="button__actions__dialog">
+      <button
+        class="btn"
+        mat-button
+        color="accent"
+        (click)="delete()"
+        *ngIf="onEdit"
+      >
+        <mat-icon>delete</mat-icon> Eliminar Horario
+      </button>
+      <button class="btn" mat-button color="primary" (click)="accept()">
+        <mat-icon>save</mat-icon
+        >{{ data.confirmMessageButton ? data.confirmMessageButton : "Aceptar" }}
+      </button>
+    </div>
+  </div>
+</div>

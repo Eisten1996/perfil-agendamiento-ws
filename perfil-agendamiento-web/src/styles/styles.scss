@@ -1,0 +1,230 @@
+@import "./styles.font.scss";
+@import "./styles.colors.scss";
+
+html,
+body {
+    height: 100%;
+}
+
+* {
+    font-family: $font-family, sans-serif;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.checkbox__item {
+    margin: 5px 0;
+}
+
+.general__content {
+    padding: 25px;
+}
+
+.configuration__section-title {
+    font-weight: bold;
+    background: $colo_gradient;
+    color: white;
+}
+
+mat-divider {
+    margin: 10px 0 !important;
+    background-color: $color_primary;
+}
+
+.configuration__buttons {
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.action__buttons {
+    float: right;
+    padding: 8px 0;
+    margin: 5px 0;
+    button {
+        font-size: 17px !important;
+    }
+}
+
+.configuration__content {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 50% 50%;
+}
+
+.content__bordered {
+    border: solid 1px #dfdfdf;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: left;
+    margin: 0 5px 15px 5px;
+}
+
+.message__error {
+    color: $color_secondary;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.mat-button.mat-primary {
+    color: $color_primary !important;
+    font-size: 15px;
+}
+
+
+.mat-button.mat-success {
+    background-color: $color_sucess;
+    color: white;
+    font-size: 15px;
+}
+
+.mat-raised-button.mat-accent {
+    background-color: $color_secondary;
+    font-size: 17px !important;
+}
+
+.mat-stroked-button {
+    font-size: 17px !important;
+}
+
+.mat-button.mat-warn {
+    color: black;
+    font-size: 15px;
+}
+
+.mat-form-field-infix {
+    border-top: 0 !important;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 2px 0 !important;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: rgba(0,0,0,.42) !important;
+}
+
+.mat-form-field-wrapper {
+    margin-bottom: -1.25em;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: $color_primary !important;
+}
+mat-icon {
+    font-size: 20px !important;
+    margin-top: -4px;
+}
+
+body {
+    margin: 0;
+}
+
+mat-form-field {
+    font-size: 16px !important;
+}
+
+.form__item {
+    display: flex;
+    align-items: center;
+}
+
+.scheduling__title {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: $color_tertiary;
+    padding: 15px 10px 10px 10px;
+}
+
+.input__select {
+    cursor: pointer;
+    border-radius: 15px;
+    border: none;
+    background-color: #f6f6f6;
+    color: #5130a2;
+    box-shadow: -5px 5px 15px -5px rgb(223 223 223);
+    // font-family: "Amelia-Light" !important;
+
+    padding: 8px 20px;
+}
+
+mat-radio-button {
+    margin-right: 8px;
+}
+
+.title__section {
+    margin-top: -25px;
+
+    label {
+        padding: 5px;
+        background: white;
+        font-weight: bold;
+    }
+}
+.mat-button-focus-overlay {
+    background-color: transparent !important;
+}
+
+.border__configuration {
+    border: 1px solid $color_accent;
+    border-radius: 15px;
+    padding: 20px 20px 10px 20px;
+    margin: 5px;
+}
+
+.section__configuration {
+    border-radius: 0 15px 15px 15px;
+    border: 1px solid $color_accent;
+    padding: 15px;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+}
+
+.input__message {
+    margin-right: 5px;
+}
+
+.success-snackbar {
+    background: $color_sucess;
+    color: white;
+}
+
+.fail-snackbar {
+    background: $color_secondary;
+    color: white;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-button {
+    width: 12px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(153, 153, 153);
+    border: thin solid gray;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(238, 238, 238);
+    border: thin solid lightgray;
+    box-shadow: rgb(223, 223, 223) 0px 0px 3px inset;
+    border-radius: 10px;
+}
+
+.fc-today {
+    background-color: rgb(243, 243, 243) !important;
+}

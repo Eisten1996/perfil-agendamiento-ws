@@ -1,0 +1,58 @@
+<div class="form__item">
+  <div class="form__label">Buscar Agencia:</div>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      id="branchName"
+      name="branchName"
+      [(ngModel)]="search"
+      (input)="filterByInput()"
+    />
+    <button
+      *ngIf="search"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="clearFilter()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div>
+  <table>
+    <thead class="configuration__section-title">
+      <tr>
+        <th width="7%"></th>
+        <th width="7%"></th>
+        <th>Agencia</th>
+        <th>Tiempo Previo Mínimo</th>
+        <th>Tiempo Máximo Cita</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let scheduling of schedulings">
+        <td>
+          <button mat-button color="warn" (click)="editScheduling(scheduling.id!)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+        <td>
+          <button
+            mat-button
+            color="accent"
+            (click)="deleteScheduling(scheduling.id!)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+        <td  (click)="editScheduling(scheduling.id!)">{{ scheduling.branchName }}</td>
+        <td>{{ scheduling.minDays }}</td>
+        <td>{{ scheduling.maxDays }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

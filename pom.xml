@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>1.5.9.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
-    <groupId>pe.com.hiper.bmatic</groupId>
-    <artifactId>perfil-agendamiento-ws</artifactId>
-    <version>5.10-SNAPSHOT</version>
+    <groupId>pe.com.hiper.bmatic.management</groupId>
+    <artifactId>perfilagendamiento</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>perfil-agendamiento-ws</name>
-    <description>Web Service de perfil de Agendamiento</description>
+    <name>perfilagendamiento</name>
+    <description>Perfil de Agendamiento</description>
     <properties>
+        <angular.project.location>perfil-agendamiento-web</angular.project.location>
+        <angular.project.nodeinstallation>node_installation</angular.project.nodeinstallation>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -31,45 +32,61 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-            <!-- <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
-            </exclusions> -->
-        </dependency>
+            </exclusions>
+        </dependency> <!--  -->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-        </dependency>
-
-        <dependency>
+        <!-- <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.19</version>
-        </dependency>
+        </dependency> -->
 
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-
-        <dependency>
+        <!-- <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>6.2.1.jre8</version>
         </dependency>
+ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>pe.com.hiper.bmatic.libraries</groupId>
+            <artifactId>session-data-library</artifactId>
+            <scope>compile</scope>
+            <version>5.4.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
     </dependencies>
 
     <build>
@@ -78,7 +95,100 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <workingDirectory>${angular.project.location}</workingDirectory>
+                    <installDirectory>${angular.project.nodeinstallation}</installDirectory>
+                </configuration>
+                <executions>
+
+                    <!-- install node and npm -->
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v14.15.4</nodeVersion>
+                            <npmVersion>6.14.10</npmVersion>
+                        </configuration>
+                    </execution>
+
+                    <!-- install node modules -->
+                    <execution>
+                        <id>npm install --no-bin-links</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                    </execution>
+
+                    <!-- build angular folder -> dist -->
+                    <execution>
+                        <id>ng build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <!-- reference: package.json  -->
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+
+                </executions>
+
+            </plugin>
+
+            <!-- copy build angular "dist" to static folder -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>otf</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-angular-dist</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>${project.basedir}/src/main/resources/static/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/${angular.project.location}/dist/perfil-agendamiento-web/</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
+
+        <finalName>perfilagendamiento</finalName>
+        <extensions>
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
+            </extension>
+        </extensions>
     </build>
 
 </project>

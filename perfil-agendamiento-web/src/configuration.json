@@ -1,0 +1,11 @@
+{
+  "durationService": 5,
+  "maxDays": 60,
+  "minDays": 0,
+  "minTolerance": 0,
+  "maxTolerance": 120,
+  "maxWeeksList": 4,
+  "maxAddDating": 10,
+  "minConfirmTime": 1,
+  "maxConfirmTime": 9999
+}

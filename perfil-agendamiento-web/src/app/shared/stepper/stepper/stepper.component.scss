@@ -1,0 +1,62 @@
+@import "src/styles/styles.colors.scss";
+
+.stepper__container {
+    display: flex;
+    align-items: center;
+}
+
+.step {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.step__by__step {
+    // width: 40px;
+    height: 40px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    padding: 5px 10px;
+    transition: 0.2s;
+}
+
+.step__unselected {
+    background: white;
+    color: $color_primary;
+    border: 1px solid $color_accent;
+}
+
+.step__selected {
+    background: $color_primary;
+    color: white;
+    border: 1px solid $color_primary;
+}
+
+.step__selected:hover {
+    cursor: pointer;
+    background-color: $color_primary_accent;
+    
+}
+
+.step__unselected:hover {
+    cursor: pointer;
+    background-color: $color_accent;
+}
+
+.line__step {
+    width: 150px;
+}
+
+.line__step__selected {
+    border: 1.5px solid  $color_primary;
+    background: $color_primary;
+}
+
+.line__step__unselected {
+    border: 1.5px solid  $color_accent;
+    background: $color_accent;
+}

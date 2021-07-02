@@ -1,0 +1,17 @@
+<div class="general__content">
+  <div class="configuration__buttons">
+    <a mat-button color="primary" 
+    [routerLink]="'/configuration'"
+    [disabled]="loading">
+      <mat-icon [inline]="true">library_add</mat-icon> Nuevo
+    </a>
+    <mat-spinner color="primary" diameter="20" *ngIf="loading"></mat-spinner>
+
+  </div>
+
+  <app-scheduling-list
+  (schedulingLoadedEvent)="schedulingLoadedEvent($event)"
+  (schedulingDeleteEvent)="schedulingDeleteEvent($event)"
+  (schedulingEditEvent)="schedulingEditEvent($event)"
+  ></app-scheduling-list>
+</div>

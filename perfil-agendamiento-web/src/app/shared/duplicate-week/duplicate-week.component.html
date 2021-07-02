@@ -1,0 +1,51 @@
+<div class="dialog__event__container">
+  <div class="btn__close">
+    <button
+      mat-mini-fab
+      color="default"
+      title="Cerrar"
+      [mat-dialog-close]="true"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="scheduling__title title__event">Copiar Horario de Semana</div>
+
+  <div class="form__schedule__content">
+    <div class="text__center">
+      <span class="form__label">Semana del {{ weekName }}</span>
+    </div>
+
+    <div class="form__label">Copiar a la semana:</div>
+
+    <div class="checkbox__week">
+      <mat-checkbox (change)="setAll($event.checked)">Seleccionar todas las semanas </mat-checkbox>
+    </div>
+    <hr/>
+    <div>
+      <div class="checkbox__week" *ngFor="let week of weekList">
+        <mat-checkbox [disabled]="!week.status" [checked]="week.checked"
+        (change)="changeWeekSelected(week)"
+          >Semana del {{ week.name }}
+
+          {{ !week.status ? "(Tiene horarios programados)" : "" }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <div class="message__error" *ngIf="messageError">
+    {{ messageError }}
+  </div>
+
+  <div class="button__actions__dialog">
+    <button mat-stroked-button color="secondary" (click)="close()">
+      Cancelar
+    </button>
+    <button class="btn" mat-button color="primary" (click)="copy()">
+      <mat-icon>save</mat-icon>
+      Copiar Horario
+    </button>
+  </div>
+</div>

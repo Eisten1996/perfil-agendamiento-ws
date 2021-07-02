@@ -1,0 +1,11 @@
+<div class="stepper__container">
+  <div class="step" *ngFor="let step of steppers; let i = index">
+    <div
+      class="step__by__step"
+      (click)="selectStep(step)"
+      [ngClass]="step.selected ? 'step__selected' : 'step__unselected'"
+    >
+      {{ step.title }}
+    </div>
+  </div>
+</div>

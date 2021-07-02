@@ -1,0 +1,24 @@
+<div>
+  <div class="scheduling__title">
+    {{ data.title }}
+  </div>
+
+  <div class="message__dialog">
+    {{ data.message }}
+  </div>
+
+  <div class="button__actions__dialog">
+    <button
+      *ngIf="data.cancelButton"
+      mat-stroked-button
+      color="secondary"
+      (click)="close()"
+    >
+      Cancelar
+    </button>
+
+    <button mat-raised-button color="accent" [mat-dialog-close]="true">
+      {{ data.confirmMessageButton ? data.confirmMessageButton : "Aceptar" }}
+    </button>
+  </div>
+</div>
