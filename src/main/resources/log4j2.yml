@@ -7,14 +7,21 @@ Configuration:
       target: SYSTEM_OUT
       PatternLayout:
         Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
-    File:
-      name: File
-      fileName: "${env:BMATIC_HOME}log/management/perfilagendamiento/perfilagendamiento.log"
+    RollingFile:
+      name: RollingFile_Appender
+      fileName: "${env:BMATIC_HOME}/log/management/perfil-agendamiento/perfil-agendamiento.log"
+      filePattern: "${env:BMATIC_HOME}/log/management/perfil-agendamiento/perfil-agendamiento-%d{yyyy-MM-dd}_%i.log"
       PatternLayout:
         pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
-        
-  Loggers: 
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 10 MB
+      DefaultRollOverStrategy:
+        max: 100
+
+  Loggers:
     Root:
-        level: info
+        level: debug
         AppenderRef:
-          - ref: File
+          - ref: RollingFile_Appender
+            level: debug

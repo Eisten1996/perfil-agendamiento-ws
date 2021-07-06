@@ -79,7 +79,7 @@ export class SchedulesComponent implements OnInit {
     this.schedules = await this.scheduleService.getScheduleList(
       this.scheduling.id!
     );
-    this.schedules.forEach(s => s.identify = s.id)!;
+    this.schedules.forEach((s) => (s.identify = s.id))!;
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -103,7 +103,6 @@ export class SchedulesComponent implements OnInit {
 
   public changeCounterType() {
     if (this.counterTypeSelected) {
-
       this.bookingTypeSelected = this.bookingTypes?.find(
         (t) => t.id === this.counterTypeSelected?.bookingType
       )!;
@@ -113,6 +112,8 @@ export class SchedulesComponent implements OnInit {
           this.counterTypeSelected.id!,
           this.scheduling.branchId!
         );
+      } else {
+        this.changingBookingType = false;
       }
     } else {
       this.bookingTypeSelected = undefined!;
@@ -132,8 +133,7 @@ export class SchedulesComponent implements OnInit {
         branchId
       );
     }
-  
-    
+
     this.counterSelected = undefined!;
   }
 
@@ -169,7 +169,9 @@ export class SchedulesComponent implements OnInit {
   public cancelBookings() {
     const dialogRef = this.confirmDialog(
       '¿Está seguro de realizar este cambio?',
-      'Se cancelarán las reservas registradas para este tipo de ventanilla.'
+      undefined!,
+      'Se cancelarán las reservas registradas para este tipo de ventanilla.',
+      true
     );
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -198,15 +200,54 @@ export class SchedulesComponent implements OnInit {
     this.scheduleTypeList = [];
   }
 
-  public confirmDialog(title: string, message: string) {
+  public confirmDialog(
+    title: string,
+    list: any[],
+    message: string,
+    cancelButton: boolean
+  ) {
     return this.dialog.open(DialogComponent, {
       width: '500px',
+
       data: {
         title: title,
+        list: list,
         message: message,
         confirmMessageButton: 'Aceptar',
-        cancelButton: true,
+        cancelButton: cancelButton,
       },
     });
+  }
+
+  public save() {
+
+    let listFiltered = this.scheduleService.filterOnlyCurrentDates(this.schedules);
+    let counterTypesWithoutSchedules: any[] = [];
+    this.counterTypes
+      .filter((c) => c.bookingType != BookingTypeId.NOT_BOOKING)
+      .forEach((c) => {
+        let list = listFiltered
+        .filter(
+          (s) => s.bookingType === c.bookingType && s.counterTypeId === c.id
+        );
+
+        if (list.length == 0) counterTypesWithoutSchedules.push(c);
+      });
+
+    if (counterTypesWithoutSchedules.length == 0) {
+      return true;
+    } else {
+      this.showCounterTypesWithoutSchedules(counterTypesWithoutSchedules);
+      return false;
+    }
+  }
+
+  private showCounterTypesWithoutSchedules(list: any[]) {
+    this.confirmDialog(
+      'No podrá guardar, debido a que los tipos de ventanilla:',
+      list,
+      `no tienen configurado horarios, se sugiere configurar los mismos, ó en su defecto configurar los tipo de ventanilla mencionados, como tipo de reserva NO PERMITE RESERVA`,
+      false
+    );
   }
 }

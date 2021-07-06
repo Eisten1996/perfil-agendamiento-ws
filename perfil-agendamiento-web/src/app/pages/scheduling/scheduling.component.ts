@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppConfig } from 'src/app/app.config.component';
 import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
@@ -8,13 +9,16 @@ import { ToastService } from 'src/app/core/services/toast.service';
 })
 export class SchedulingComponent implements OnInit {
   public loading: boolean = true;
-  constructor(private router: Router, private toastService: ToastService) {}
+  public authorization: any;
+  constructor(
+    private router: Router,
+    private toastService: ToastService,
+    private config: AppConfig
+  ) {
+    this.authorization = this.config.authorization;
+  }
 
   ngOnInit(): void {
-    const message = localStorage.getItem('scheduling-success');
-    if (message != null)
-      this.toastService.openSnackBar(message, 'done', 'success');
-    localStorage.removeItem('scheduling-success');
   }
 
   public save() {}
@@ -30,5 +34,4 @@ export class SchedulingComponent implements OnInit {
   public schedulingEditEvent($event: any) {
     this.router.navigate([`configuration/${$event}`]);
   }
-
 }

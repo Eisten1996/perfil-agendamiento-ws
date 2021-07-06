@@ -25,8 +25,8 @@
   <table>
     <thead class="configuration__section-title">
       <tr>
-        <th width="7%"></th>
-        <th width="7%"></th>
+        <th width="7%" *ngIf="authorization.update"></th>
+        <th width="7%" *ngIf="authorization.delete"></th>
         <th>Agencia</th>
         <th>Tiempo Previo Mínimo</th>
         <th>Tiempo Máximo Cita</th>
@@ -36,7 +36,12 @@
     <tbody>
       <tr *ngFor="let scheduling of schedulings">
         <td>
-          <button mat-button color="warn" (click)="editScheduling(scheduling.id!)">
+          <button
+            mat-button
+            color="warn"
+            (click)="editScheduling(scheduling.id!)"
+            *ngIf="authorization.update"
+          >
             <mat-icon>edit</mat-icon>
           </button>
         </td>
@@ -45,11 +50,14 @@
             mat-button
             color="accent"
             (click)="deleteScheduling(scheduling.id!)"
+            *ngIf="authorization.delete"
           >
             <mat-icon>delete</mat-icon>
           </button>
         </td>
-        <td  (click)="editScheduling(scheduling.id!)">{{ scheduling.branchName }}</td>
+        <td (click)="editScheduling(scheduling.id!)">
+          {{ scheduling.branchName }}
+        </td>
         <td>{{ scheduling.minDays }}</td>
         <td>{{ scheduling.maxDays }}</td>
       </tr>

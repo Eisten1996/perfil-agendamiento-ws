@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppConfig } from 'src/app/app.config.component';
 import { Branch } from 'src/app/core/models/branch.model';
@@ -26,7 +25,7 @@ export class ConfigurationComponent implements OnInit {
 
   public onEdit: boolean;
 
-  public selected: number = 2;
+  public selected: number = 1;
 
   public loading: boolean = true;
 
@@ -41,9 +40,9 @@ export class ConfigurationComponent implements OnInit {
     {
       step: 1,
       title: 'Configuración General',
-      selected: false,
+      selected: true,
     },
-    { step: 2, title: 'Configuración de Horarios', selected: true },
+    { step: 2, title: 'Configuración de Horarios', selected: false },
   ];
 
   public counterBooking: CounterBooking;
@@ -109,6 +108,7 @@ export class ConfigurationComponent implements OnInit {
 
   public confirmDialog(title: string, message: string, cancelEnabled: boolean) {
     return this.dialog.open(DialogComponent, {
+      
       width: '500px',
       data: {
         title: title,
@@ -134,8 +134,9 @@ export class ConfigurationComponent implements OnInit {
           this.save(this.information.scheduling, true);
         }
       } else {
-        this.save(null, false);
-       
+        if (this.schedules.save()) {
+          this.save(null, false);
+        }       
       }
     }
     
@@ -176,8 +177,8 @@ export class ConfigurationComponent implements OnInit {
     );
     this.loading = false;
     this.onEdit = true;
+    this.showMessageSaved();
     if (next == 'continue') {
-      this.toastService.openSnackBar(this.getMessageSuccess(), 'done', 'success');
       this.selected = 2;
       this.setSelectedStep(this.selected);
     } else this.router.navigate(['']);
@@ -185,16 +186,21 @@ export class ConfigurationComponent implements OnInit {
 
   async acceptButton() {
     if (!this.loading){
-      localStorage.setItem('scheduling-success', this.getMessageSuccess());
       if (this.selected == 1) {
         if (this.information.save()) {
           this.saveScheduling(this.information.scheduling, 'back');
         }
       } else if (this.selected == 2) {
-        this.saveCounterBooking('finish');
+        if (this.schedules.save()) {
+          this.saveCounterBooking('finish');
+        }
       }
     }
     
+  }
+
+  private showMessageSaved() {
+    this.toastService.openSnackBar(this.getMessageSuccess(), 'done', 'success');
   }
 
   private getMessageSuccess() {
@@ -211,6 +217,7 @@ export class ConfigurationComponent implements OnInit {
     };
     await this.schedulingService.saveCounterBookings(this.counterBooking);
     await this.scheduleService.saveSchedules(this.schedules.schedules, this.scheduling.id!);
+    this.showMessageSaved();
     if (next === 'back') {
       this.selected = 1;
       this.setSelectedStep(this.selected);

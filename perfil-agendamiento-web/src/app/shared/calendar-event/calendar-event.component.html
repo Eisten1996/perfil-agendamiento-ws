@@ -24,13 +24,14 @@
           [matDatepicker]="picker2"
           [(ngModel)]="dateSelected"
           [min]="minDate"
+          disabled
           (dateChange)="changeDateInput()"
         />
         <mat-datepicker-toggle
           matSuffix
           [for]="picker2"
         ></mat-datepicker-toggle>
-        <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        <mat-datepicker #picker2 color="accent" disabled="false" ></mat-datepicker>
       </mat-form-field>
     </div>
     <div>
@@ -123,7 +124,7 @@
       >
         <mat-icon>delete</mat-icon> Eliminar Horario
       </button>
-      <button class="btn" mat-button color="primary" (click)="accept()">
+      <button class="btn" mat-button color="primary" (click)="accept()" title="Guardar">
         <mat-icon>save</mat-icon
         >{{ data.confirmMessageButton ? data.confirmMessageButton : "Aceptar" }}
       </button>

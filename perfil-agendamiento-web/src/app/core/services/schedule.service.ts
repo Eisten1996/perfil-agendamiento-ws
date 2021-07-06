@@ -18,23 +18,21 @@ export class ScheduleService {
   }
 
   public filterOnlyCurrentDates(schedules: Schedule[]) {
-    
     const date = new Date();
     let d = new Date();
     date.setHours(0, 0, 0, 0);
     let schedulesFiltered = schedules
-      .filter((s) => new Date(s.start!) >= date)
-      .map((s) => {
-        s.start = s.start?.split(' ')[1];
-        s.end = s.end?.split(' ')[1];
-        return s;
-      });
+      .filter((s) => new Date(s.start!) >= date);
 
     return schedulesFiltered;
   }
 
   public saveSchedules(schedules: Schedule[], scheduling_id: number) {
-    schedules = this.filterOnlyCurrentDates(schedules);
+    schedules = this.filterOnlyCurrentDates(schedules).map((s) => {
+      s.start = s.start?.split(' ')[1];
+      s.end = s.end?.split(' ')[1];
+      return s;
+    });
     return this.http
       .post<any>(`${environment.SCHEDULING_WS}/schedules?scheduling_id=${scheduling_id}`, schedules)
       .toPromise();

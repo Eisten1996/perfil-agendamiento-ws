@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/perfil-agendamiento-ws.iml" filepath="$PROJECT_DIR$/perfil-agendamiento-ws.iml" />
+      <module fileurl="file://$PROJECT_DIR$/perfilagendamiento.iml" filepath="$PROJECT_DIR$/perfilagendamiento.iml" />
     </modules>
   </component>
 </project>

@@ -7,12 +7,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TooltipDirective } from 'src/app/directives/tooltip.directive';
 
 @NgModule({
-  declarations: [InformationComponent],
+  declarations: [InformationComponent, TooltipDirective],
   imports: [
     CommonModule,
     FormsModule,
@@ -24,7 +25,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatButtonModule,
     MatRadioModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   exports: [InformationComponent],
 })

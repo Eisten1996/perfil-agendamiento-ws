@@ -10,6 +10,6 @@ export class AuthorizationService {
   constructor(private http: HttpClient) {}
 
   public getAuthorization(params: any) {
-    return this.http.get(`${environment.SCHEDULING_WS}/v1/security/authorization`, { params }).toPromise();
+    return this.http.get(`${environment.SCHEDULING_WS}/security/authorization`, { params }).toPromise();
   }
 }

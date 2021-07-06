@@ -43,11 +43,16 @@ export class InformationComponent implements OnInit {
 
   public inputUtil: InputUtil;
 
+  public msg: any = {};
+
   @Input()
   public onEdit: boolean;
 
-  constructor(private serviceService: ServiceService) {
+  constructor(private serviceService: ServiceService,) {
     this.inputUtil = new InputUtil();
+    this.msg.multipleBookings = `Al activar este campo, te permitirá activar más de una reserva por servicio configurado para este perfil de agendamiento.`;
+    this.msg.confirmEmail = `Al activar este campo, te permitirá enviar un correo de confirmación de la reserva, de no ser confirmada, el horario quedará liberado.`;
+    this.msg.confirmTime = `El valor ingresado en este campo, es sumado a la hora de creación de la reserva, teniendo de este modo el rango de tiempo para confirmar la reserva.`;
   }
 
   ngOnInit(): void {
@@ -219,9 +224,10 @@ export class InformationComponent implements OnInit {
       return false;
     }
     if (this.services.length > 0) {
-      
       const find = this.services.filter(
-        (t) => (t.duration == null || t.duration! % this.configuration.durationService! !== 0)
+        (t) =>
+          t.duration == null ||
+          t.duration! % this.configuration.durationService! !== 0
       );
       if (find.length > 0) {
         this.messageError =

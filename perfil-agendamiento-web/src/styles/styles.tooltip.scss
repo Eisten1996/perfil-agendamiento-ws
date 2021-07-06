@@ -1,0 +1,42 @@
+.tooltip__main [tooltip] {
+    display: inline-block;
+    text-align: center;
+}
+
+.tooltip__content {
+    cursor: pointer;
+    margin: 0px 15px;
+    padding: 0px 2px;
+}
+.ng-tooltip {
+    position: absolute;
+    max-width: 300px;
+    font-size: 14px;
+    text-align: left;
+    color: #f8f8f2;
+    padding: 3px 8px;
+    background: #282a36;
+    border-radius: 4px;
+    display: none;
+    height: 78px;
+}
+.ng-tooltip-zindex {
+    z-index: -9999;
+}
+.ng-tooltip:after {
+    content: "";
+    position: absolute;
+    border-style: solid;
+}
+
+.ng-tooltip-right:after {
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-color: transparent black transparent transparent;
+}
+.ng-tooltip-show {
+    display: flex;
+    align-items: center;
+}

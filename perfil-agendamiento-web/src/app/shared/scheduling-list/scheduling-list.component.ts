@@ -17,6 +17,8 @@ export class SchedulingListComponent implements OnInit {
   public schedulingsAll: Scheduling[] = [];
 
  
+  @Input()
+  public authorization: any;
 
   @Output()
   public schedulingLoadedEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -84,6 +86,7 @@ export class SchedulingListComponent implements OnInit {
   ): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
+      
       data: {
         title: title,
         message: message,

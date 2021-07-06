@@ -40,7 +40,6 @@ export class AppConfig {
     this.authorization = await this.authorizationService.getAuthorization(
       params
     );
-    console.log(this.authorization);
     return this.authorization;
   }
 }

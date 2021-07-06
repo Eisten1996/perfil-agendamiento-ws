@@ -3,6 +3,12 @@
     {{ data.title }}
   </div>
 
+  <div class="lit__dialog" *ngIf="data.list">
+    <div *ngFor="let item of data.list; let i = index">
+      {{i+1}}. {{ item.nick }}
+    </div>
+  </div>
+
   <div class="message__dialog">
     {{ data.message }}
   </div>

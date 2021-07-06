@@ -12,7 +12,7 @@ export class BranchService {
 
   public getBranchList() {
     return this.http
-      .get<Branch[]>(`${environment.SCHEDULING_WS}/branches?user_id=U000002&branch_id=0`)
+      .get<Branch[]>(`${environment.SCHEDULING_WS}/branches`)
       .toPromise()
       .then(data => 
          {

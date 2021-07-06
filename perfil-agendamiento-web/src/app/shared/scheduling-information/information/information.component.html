@@ -108,6 +108,16 @@
               [disabled]="loadingEdit"
             >
             </mat-slide-toggle>
+            <div class="tooltip__main">
+              <div
+                class="tooltip__content"
+                tooltip="{{ msg.multipleBookings }}"
+                placement="right"
+                [delay]="300"
+              >
+                <div class="badge__information">?</div>
+              </div>
+            </div>
           </div>
 
           <div class="form__item margin__item">
@@ -120,6 +130,16 @@
               [disabled]="loadingEdit"
             >
             </mat-slide-toggle>
+            <div class="tooltip__main">
+              <div
+                class="tooltip__content"
+                tooltip="{{ msg.confirmEmail }}"
+                placement="right"
+                [delay]="300"
+              >
+                <div class="badge__information">?</div>
+              </div>
+            </div>
           </div>
 
           <div
@@ -157,6 +177,16 @@
                 >
               </mat-radio-group>
             </div>
+            <div class="tooltip__main">
+              <div
+                class="tooltip__content"
+                tooltip="{{ msg.confirmTime }}"
+                placement="right"
+                [delay]="300"
+              >
+                <div class="badge__information">?</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -165,7 +195,7 @@
           <label> Duración de Servicios </label>
         </div>
 
-        <div class="margin__item"  style="overflow-y: auto; height: 450px">
+        <div class="margin__item" style="overflow-y: auto; height: 450px">
           <div *ngIf="!branchSelected">
             <mat-hint
               >Seleccione una agencia para mostrar los servicios</mat-hint
