@@ -1,10 +1,10 @@
 @import "src/styles/styles.colors.scss";
 
-
 .form__item {
     display: flex;
     align-items: center;
     padding: 10px;
+    justify-content: center;
 }
 
 .form__label {
@@ -19,7 +19,34 @@
     color: $color_primary;
 }
 
-
 .section__schedules {
     margin-top: 15px;
+}
+
+.servicio__counter {
+    justify-content: center;
+    width: 80%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.schedule__added {
+    min-width: 40px;
+    font-size: 11px;
+    text-align: center;
+    background-color: rgb(255, 39, 152);
+    color: white;
+    border-radius: 15px;
+    padding: 5px;
+    box-shadow: -5px 5px 15px -5px rgb(162 160 160);
+    position: relative;
+    margin: 5px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.horizontal__flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

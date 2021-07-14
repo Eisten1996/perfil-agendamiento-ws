@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppConfig } from 'src/app/app.config.component';
-import { Branch } from 'src/app/core/models/branch.model';
+import { Branch, BranchType } from 'src/app/core/models/branch.model';
 import { Configuration } from 'src/app/core/models/configuration.model';
 import { CounterBooking } from 'src/app/core/models/counter_booking.model';
 import { Scheduling } from 'src/app/core/models/scheduling.model';
@@ -33,8 +33,9 @@ export class ConfigurationComponent implements OnInit {
 
   public configuration: Configuration;
 
-
   public scheduling: Scheduling;
+
+  public preScheduling: Scheduling;
 
   public steppers: Stepper[] = [
     {
@@ -74,12 +75,11 @@ export class ConfigurationComponent implements OnInit {
         'Perderá todos los cambios configurados en esta sección.',
         true
       );
-  
+
       dialogRef.afterClosed().subscribe((result) => {
         if (result) this.router.navigate(['']);
       });
     }
-   
   }
 
   public save($event: any, flag: boolean) {
@@ -90,11 +90,10 @@ export class ConfigurationComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result)  {
+      if (result) {
         if (flag) this.saveScheduling($event, 'continue');
         else this.saveCounterBooking('back');
-        }
-     
+      }
     });
   }
 
@@ -108,7 +107,6 @@ export class ConfigurationComponent implements OnInit {
 
   public confirmDialog(title: string, message: string, cancelEnabled: boolean) {
     return this.dialog.open(DialogComponent, {
-      
       width: '500px',
       data: {
         title: title,
@@ -131,15 +129,22 @@ export class ConfigurationComponent implements OnInit {
     if (!this.loading) {
       if ($event == 2) {
         if (this.information.save()) {
-          this.save(this.information.scheduling, true);
+          if (!this.isSchedulingEqual(this.preScheduling, this.scheduling)) {
+           
+            this.save(this.information.scheduling, true);
+          } else {
+            // this.loading = true;
+            this.selected = 2;
+            this.setSelectedStep(this.selected);
+          }
+         
         }
       } else {
         if (this.schedules.save()) {
           this.save(null, false);
-        }       
+        }
       }
     }
-    
   }
 
   private setSelectedStep(step: number) {
@@ -158,9 +163,12 @@ export class ConfigurationComponent implements OnInit {
   }
 
   async getScheduling() {
+
     this.scheduling = await this.schedulingService.getSchedulingById(
       this.schedulingId
     );
+    this.preScheduling = JSON.parse(JSON.stringify(this.scheduling));
+
     this.loading = false;
   }
 
@@ -176,16 +184,16 @@ export class ConfigurationComponent implements OnInit {
       this.scheduling
     );
     this.loading = false;
-    this.onEdit = true;
     this.showMessageSaved();
     if (next == 'continue') {
+      this.preScheduling = JSON.parse(JSON.stringify(this.scheduling));
       this.selected = 2;
       this.setSelectedStep(this.selected);
     } else this.router.navigate(['']);
   }
 
   async acceptButton() {
-    if (!this.loading){
+    if (!this.loading) {
       if (this.selected == 1) {
         if (this.information.save()) {
           this.saveScheduling(this.information.scheduling, 'back');
@@ -196,7 +204,6 @@ export class ConfigurationComponent implements OnInit {
         }
       }
     }
-    
   }
 
   private showMessageSaved() {
@@ -216,7 +223,10 @@ export class ConfigurationComponent implements OnInit {
       bookingTypeList: this.schedules.counterTypes,
     };
     await this.schedulingService.saveCounterBookings(this.counterBooking);
-    await this.scheduleService.saveSchedules(this.schedules.schedules, this.scheduling.id!);
+    await this.scheduleService.saveSchedules(
+      this.schedules.schedules,
+      this.scheduling.id!
+    );
     this.showMessageSaved();
     if (next === 'back') {
       this.selected = 1;
@@ -225,13 +235,25 @@ export class ConfigurationComponent implements OnInit {
       this.router.navigate(['']);
     }
     this.loading = false;
-    
-    
   }
 
   changeCounterTypeEmmiter($event: any) {
     this.loading = true;
     this.bookingsCanceled();
     this.loading = false;
+  }
+
+  isSchedulingEqual(pre: Scheduling, post: Scheduling) {
+    return (
+      pre != undefined &&
+      pre.minDays === post.minDays &&
+      pre.maxDays === post.maxDays &&
+      pre.toleranceTime === post.toleranceTime &&
+      pre.multipleBookings === post.multipleBookings &&
+      pre.confirmEmail === post.confirmEmail &&
+      pre.confirmTime === post.confirmTime &&
+      pre.unidConfirmTime === post.unidConfirmTime &&
+      pre.services === post.services
+    );
   }
 }

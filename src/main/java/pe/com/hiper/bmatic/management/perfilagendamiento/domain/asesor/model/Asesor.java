@@ -1,12 +1,19 @@
 package pe.com.hiper.bmatic.management.perfilagendamiento.domain.asesor.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pe.com.hiper.bmatic.management.perfilagendamiento.domain.service.model.Service;
+
 public class Asesor {
     private String id;
     private String name;
-
-    public Asesor(String id, String name) {
+    private List<Service> services;
+    
+    public Asesor(String id, String name, List<Service> services) {
         this.id = id;
         this.name = name;
+        this.services = services;
     }
 
     public String getId() {
@@ -25,6 +32,14 @@ public class Asesor {
         this.name = name;
     }
 
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
     public static AsesorBuilder builder() {
         return new AsesorBuilder();
     }
@@ -32,6 +47,7 @@ public class Asesor {
     public static class AsesorBuilder {
         private String id;
         private String name;
+        private List<Service> services = new ArrayList<Service>();
 
         public AsesorBuilder id(String id) {
             this.id = id;
@@ -43,8 +59,13 @@ public class Asesor {
             return this;
         }
 
+        public AsesorBuilder services(List<Service> services) {
+            this.services = services;
+            return this;
+        }
+
         public Asesor build() {
-            return new Asesor(id, name);
+            return new Asesor(id, name, services);
         }
     }
 }

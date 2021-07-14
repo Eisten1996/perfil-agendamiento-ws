@@ -72,7 +72,7 @@
           </label>
         </div>
 
-        <div class="flex">
+        <div class="horizontal__flex">
           <div class="form__item">
             <div class="form__label">
               {{
@@ -107,6 +107,15 @@
                 {{ counter.name }}
               </option>
             </select>
+          </div>
+
+          <div class="servicio__counter">
+            <label
+              *ngFor="let service of counterSelected?.services"
+              class="schedule__added"
+            >
+              {{ service.name }}
+            </label>
           </div>
         </div>
 

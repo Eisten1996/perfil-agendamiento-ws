@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  SCHEDULING_WS: 'http://localhost:8080/v1'
+  SCHEDULING_WS: '/perfilagendamiento/v1'
 };
 
 /*

@@ -32,6 +32,7 @@ export class SchedulingComponent implements OnInit {
   }
 
   public schedulingEditEvent($event: any) {
+    this.loading = true;
     this.router.navigate([`configuration/${$event}`]);
   }
 }

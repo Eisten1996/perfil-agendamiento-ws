@@ -7,4 +7,8 @@ import java.util.List;
 public interface ServiceRepository {
 
     List<Service> getServicesByBranch(String branchId);
+
+    List<Service> getServicesByAsesor(String asesorId);
+
+    List<Service> getServicesByCounter(String counterId);
 }

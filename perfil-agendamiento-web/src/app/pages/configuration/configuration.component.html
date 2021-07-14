@@ -34,9 +34,10 @@
 
     <app-schedules
       #schedules
+      [onEdit]="onEdit"
       [scheduling]="scheduling"
       (changeCounterTypeEmmiter)="changeCounterTypeEmmiter($event)"
-      *ngIf="selected == 2"
+      [ngClass]="selected == 2 ? 'show__component' : 'none__component'"
     ></app-schedules>
   </div>
 </div>

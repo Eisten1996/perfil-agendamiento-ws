@@ -19,6 +19,10 @@ import { InputUtil } from 'src/app/core/utils/InputUtil';
   styleUrls: ['./information.component.scss'],
 })
 export class InformationComponent implements OnInit {
+
+  @Input()
+  public onEdit: boolean;
+  
   @Input()
   public scheduling: Scheduling;
 
@@ -44,9 +48,6 @@ export class InformationComponent implements OnInit {
   public inputUtil: InputUtil;
 
   public msg: any = {};
-
-  @Input()
-  public onEdit: boolean;
 
   constructor(private serviceService: ServiceService,) {
     this.inputUtil = new InputUtil();

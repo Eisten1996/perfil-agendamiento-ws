@@ -181,7 +181,6 @@ export class CalendarMainComponent implements OnInit, AfterViewInit {
     );
     dialog.afterClosed().subscribe((data) => {
       if (data?.action === 'update') {
-
         const index = this.findIndexScheduleById(data.lastId);
         this.schedules[index] = data.schedule;
       }
@@ -208,7 +207,6 @@ export class CalendarMainComponent implements OnInit, AfterViewInit {
 
   public eventDialogAdd(action_title: string, start: Date) {
     return this.dialog.open(CalendarEventComponent, {
-      
       width: '420px',
       data: {
         action: action_title,
@@ -234,7 +232,7 @@ export class CalendarMainComponent implements OnInit, AfterViewInit {
   ) {
     return this.dialog.open(CalendarEventComponent, {
       width: '420px',
-      
+
       data: {
         action: action,
         confirmMessageButton: 'Guardar',
@@ -280,7 +278,7 @@ export class CalendarMainComponent implements OnInit, AfterViewInit {
 
     const dialog = this.dialog.open(DuplicateWeekComponent, {
       width: '420px',
-      
+
       data: {
         startWeek: startWeek,
         schedules: this.scheduleService.getSchedulesByFilters(
@@ -294,9 +292,10 @@ export class CalendarMainComponent implements OnInit, AfterViewInit {
 
     dialog.afterClosed().subscribe((data) => {
       if (data) {
-        data.schedules.forEach((s: any) => this.schedules.push(s));
-        
-        this.calendarComponent.getApi().addEventSource(data.schedules);
+        if (data.schedules) {
+          data.schedules.forEach((s: any) => this.schedules.push(s));
+          this.calendarComponent.getApi().addEventSource(data.schedules);
+        }
       }
     });
   }

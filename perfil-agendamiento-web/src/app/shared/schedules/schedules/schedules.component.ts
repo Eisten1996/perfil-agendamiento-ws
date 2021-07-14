@@ -32,6 +32,9 @@ import { ScheduleService } from 'src/app/core/services/schedule.service';
 })
 export class SchedulesComponent implements OnInit {
   @Input()
+  public onEdit: boolean;
+
+  @Input()
   public scheduling: Scheduling;
 
   @Output()
@@ -83,6 +86,8 @@ export class SchedulesComponent implements OnInit {
   }
 
   async ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+
     if (changes.scheduling.currentValue) {
       this.scheduling = changes?.scheduling.currentValue;
       await this.getCounterTypeList();
@@ -106,15 +111,7 @@ export class SchedulesComponent implements OnInit {
       this.bookingTypeSelected = this.bookingTypes?.find(
         (t) => t.id === this.counterTypeSelected?.bookingType
       )!;
-      this.cleanCounters();
-      if (this.counterTypeSelected.bookingType !== BookingTypeId.NOT_BOOKING) {
-        this.getScheduleTypeList(
-          this.counterTypeSelected.id!,
-          this.scheduling.branchId!
-        );
-      } else {
-        this.changingBookingType = false;
-      }
+      this.changeCounterTypeConfirmed(this.counterTypeSelected.bookingType!);
     } else {
       this.bookingTypeSelected = undefined!;
     }
@@ -138,6 +135,8 @@ export class SchedulesComponent implements OnInit {
   }
 
   public changeBookingType() {
+    console.log(this.onEdit);
+
     if (this.counterTypeSelected.bookingType === BookingTypeId.NOT_BOOKING) {
       this.changingBookingType = true;
       this.setBookingTypeToCounterType();
@@ -146,7 +145,11 @@ export class SchedulesComponent implements OnInit {
         this.scheduling.branchId!
       );
     } else {
-      this.cancelBookings();
+      if (this.onEdit) this.cancelBookings();
+      else {
+        this.setBookingTypeToCounterType();
+        this.changeCounterTypeConfirmed(this.bookingTypeSelected.id!);
+      }
     }
   }
 
@@ -178,21 +181,25 @@ export class SchedulesComponent implements OnInit {
       if (result) {
         this.changeCounterTypeEmmiter.emit(this.scheduling);
         this.setBookingTypeToCounterType();
-        if (this.bookingTypeSelected.id !== BookingTypeId.NOT_BOOKING) {
-          this.getScheduleTypeList(
-            this.counterTypeSelected.id!,
-            this.scheduling.branchId!
-          );
-        } else {
-          this.changingBookingType = false;
-          this.cleanCounters();
-        }
+        this.changeCounterTypeConfirmed(this.bookingTypeSelected.id!);
       } else {
         this.bookingTypeSelected = this.bookingTypes.find(
           (b) => this.counterTypeSelected.bookingType === b.id
         )!;
       }
     });
+  }
+
+  private changeCounterTypeConfirmed(typeId: string) {
+    if (typeId !== BookingTypeId.NOT_BOOKING) {
+      this.getScheduleTypeList(
+        this.counterTypeSelected.id!,
+        this.scheduling.branchId!
+      );
+    } else {
+      this.changingBookingType = false;
+      this.cleanCounters();
+    }
   }
 
   private cleanCounters() {
@@ -220,14 +227,14 @@ export class SchedulesComponent implements OnInit {
   }
 
   public save() {
-
-    let listFiltered = this.scheduleService.filterOnlyCurrentDates(this.schedules);
+    let listFiltered = this.scheduleService.filterOnlyCurrentDates(
+      this.schedules
+    );
     let counterTypesWithoutSchedules: any[] = [];
     this.counterTypes
       .filter((c) => c.bookingType != BookingTypeId.NOT_BOOKING)
       .forEach((c) => {
-        let list = listFiltered
-        .filter(
+        let list = listFiltered.filter(
           (s) => s.bookingType === c.bookingType && s.counterTypeId === c.id
         );
 
